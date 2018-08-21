@@ -1,0 +1,76 @@
+# Tarefas de desenvolvimento
+
+@ Prestações pendentes que passaram do prazo.
+  
+  - Ao clicar no botão que visualiza a prestação, caso a prestação seja diferente de "concluída" e
+  a data de finalização utrapassada. O sistema exibira uma mensagem informando a situação e proibindo 
+  o acesso a tela de cadastro.
+  -Testes realizados com o colaborador 12854(alteração da data de finalização).
+  -Tabelas envolvidas: tPROSparm.
+
+@ Criação de um novo parâmetro para finalização dos depositos(gerar data ao clicar no botão).
+   
+  - alterar data de encerramento dos depósitos (tabela tPROSparm.)    
+  - realizar um update em todos os planejamentos que estiverem com
+  a situação diferente de concluído do mês de referência, zerando os mesmos.
+  - habilitar as prestações de contas.
+
+@ Criação de tela para regional criar planejamento de colaboradores após afastamento
+
+   -criar planejamento zerado apenas com os dias que faltam.
+   -habilitar as prestações de contas , apenas com os dias restantes.(*) 
+
+@ Relatórios
+
+- Relatórios de saldos : listar por agentes,listar por período, por unidade.
+- Relatórios de comparação
+- Planejamento não aberto
+- Prestações de contas não concluídas
+
+@ Criação de gráficos
+
+- gastos com planejamentos. 
+
+@ Validações das mensagens do sistema.
+                 plan  ||  Pre
+-cadastro    ->                
+-reabertura  ->               
+-autorização ->               
+-Validação   -> 
+
+@Regras na grid (funções de validação)
+
+- shift + tab: na primeira celula(data) a função shift+tab foi bloqueada, pois a mesma entra em conflito com
+outra função para a celula da próxima linha, ocasionando um bug na grid. Para as demais celulas a função funciona.  
+
+- tab:
+- esc: Foi bloqueado.
+- enter:
+
+ + O campo descrição está ok, se a cel. inicial e final estiverem preenchidas e a descrição for vazia, toda 
+ a linha será zerada.
+
+ + se a cel. inicial e final estiverem zeradas es descrição for preenchida , toda a linha será zerada.
+
+ + para as células ini e fim após serem preenchidas e clicar a tecla enter , pode ocorrer um problema, que é 
+ as células ini e fim  ficam preenchida e a descrição não, porém se tentar salvar nesse formato o sistema não deixará.  
+
+-click(mouse):
+ + concluído para coletivo.
+
+-scroll: bloqueado.                
+
+
+@ Regras de negócios 22/03/2017
+
+- Para os cargos:
+  6600 - Assistente Adm. de Unidade.
+  7500 - Assistente Adm. Regional.
+
+Não poderão solicitar planejamento pelo prossiga para os próprios, apenas para outros colaboradores.
+
+- O tratamento para solucionar foi, verificar o cargo na tela de criar novo planejamento e mundaça no
+ select dos filtros de colaboradores. 
+
+
+

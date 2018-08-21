@@ -1,0 +1,106 @@
+.icon-user {
+    background-image: url(../images/user.png) !important;
+}
+
+.icon-user-add {
+    background-image: url(../images/user_add.gif) !important;
+}
+
+.icon-save {
+    background-image: url(../images/save.gif) !important;
+}
+
+.icon-reset {
+    background-image: url(../images/stop.png) !important;
+}
+
+.icon-grid {
+    background-image: url(../images/grid.png) !important;
+}
+
+.icon-add {
+    background-image: url(../images/add.png) !important;
+}
+
+.icon-delete {
+    background-image: url(../images/delete.png) !important;
+}
+
+.icon-zoom {
+    background-image: url(../images/zoom.png) !important;
+}
+
+.icon-buscar {
+    background-image: url(../images/buscar.png) !important;
+}
+.icon-novo {
+    background-image: url(../images/novo.png) !important;
+}
+.icon-planejamento {
+    background-image: url(../images/planejamento.png) !important;
+}
+.icon-prestacao {
+    background-image: url(../images/prestacao.png) !important;
+}
+.icon-reabrir {
+    background-image: url(../images/reabrir.png) !important;
+}
+.icon-sair {
+    background-image: url(../images/sair.png) !important;
+}
+.icon-relatorio {
+    background-image: url(../images/relatorio.png) !important;
+}
+.icon-fechar {
+    background-image: url(../images/fechar.png) !important;
+}
+.icon-autorizar {
+    background-image: url(../images/autorizar.png) !important;
+}
+.icon-validar {
+    background-image: url(../images/validar.png) !important;
+}
+.icon-importar {
+    background-image: url(../images/importar.png) !important;
+}
+.icon-accept {
+    background-image: url(../images/accept.png) !important;
+}
+.icon-zoom {
+    background-image: url(../images/zoom.png) !important;
+}
+.icon-prest {
+    background-image: url(../images/arquprest.png) !important;
+}
+.icon-admger {
+    background-image: url(../images/adm_ger.png) !important;
+}
+.icon-admgo {
+    background-image: url(../images/adm_go.png) !important;
+}
+.icon-moedas {
+    background-image: url(../images/moedas.png) !important;
+}
+.icon-liberar {
+    background-image: url(../images/liberar.png) !important;
+}
+.icon-edit {
+    background-image: url(../images/edit_plan.png) !important;
+}
+.icon-car {
+    background-image: url(../images/car_add.png) !important;
+}
+.icon-filtro {
+    background-image: url(../images/filtro.png) !important;
+}
+.icon-excel {
+    background-image: url(../images/excel.png) !important;
+}
+
+
+
+
+
+
+
+
