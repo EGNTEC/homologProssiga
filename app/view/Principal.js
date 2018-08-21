@@ -60,6 +60,7 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('histsld').setHeight(450);
                 Ext.getCmp('idencdep').hide();
                 Ext.getCmp('locadd').hide();
+                Ext.getCmp('idSolValr').hide();
 
             } else
             if (niv == 3) {
@@ -77,6 +78,7 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('idgervlr').hide();
                 Ext.getCmp('btnNReali').hide();
                 Ext.getCmp('locadd').hide();
+                Ext.getCmp('idSolValr').hide();
 
                 if (codcargo == 6600) {
 
@@ -112,9 +114,6 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('idgervlr').show();
                 Ext.getCmp('locadd').hide();
 
-                //Ext.getCmp('btnRelPres').show();
-                //Ext.getCmp('btnRelPlan').show();
-                //Ext.getCmp('btnOut').hide();
                 Ext.getCmp('btncadplan').show();
                 Ext.getCmp('btnNReali').show();
 
@@ -128,6 +127,12 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('sitsubord').setWidth(770);
                 Ext.getCmp('sitsubord').setHeight(470);
                 Ext.getCmp('gridsubord').setHeight(600);
+                Ext.getCmp('idSolValr').hide();
+
+                //Tratamento para os cargos G.O/C.R
+                if(codcargo == 7800 || codcargo == 6500){
+                    Ext.getCmp('idSolValr').show();
+                }
 
             } else
             if (niv == 1) {
@@ -146,6 +151,7 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('btnPre').show();
                 Ext.getCmp('idencdep').show();
                 Ext.getCmp('locadd').show();
+                Ext.getCmp('idSolValr').show();
                 
             }
         }
@@ -622,6 +628,15 @@ Ext.create('Ext.container.Viewport', {
                                     }
                                 }
                             }, //fim do botão gerência
+                            {
+                                xtype: 'button',
+                                id: 'idSolValr',
+                                text: 'Solicitar Valor',
+                                style: {
+
+                                    margin: '5 0 0 0'
+                                }
+                            },
                             {
                                 xtype: 'button',
                                 id: 'btnNReali',
