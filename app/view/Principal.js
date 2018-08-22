@@ -122,7 +122,6 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('btnPre').show();
 
                 Ext.getCmp('histsaldo').hide();
-                Ext.getCmp('histsaldo').hide();
 
                 Ext.getCmp('sitsubord').setWidth(770);
                 Ext.getCmp('sitsubord').setHeight(470);
@@ -130,8 +129,26 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('idSolValr').hide();
 
                 //Tratamento para os cargos G.O/C.R
-                if(codcargo == 7800 || codcargo == 6500){
+                if(codcargo == 7800){
                     Ext.getCmp('idSolValr').show();
+                    Ext.getCmp('histsaldo').show();
+                    Ext.getCmp('btncadplan').hide();
+                    Ext.getCmp('btnNReali').hide();
+                    Ext.getCmp('btnPlan').hide();
+                    Ext.getCmp('sitsubord').hide();
+                    Ext.getCmp('idAdm').hide();
+                    Ext.getCmp('btnPreGer').hide();
+                                        
+                }
+
+                if(codcargo == 6500){
+                    Ext.getCmp('idSolValr').show();
+                    Ext.getCmp('histsaldo').show();
+                    Ext.getCmp('btncadplan').hide();
+                    Ext.getCmp('btnNReali').hide();
+                    Ext.getCmp('btnPlan').hide();
+                    Ext.getCmp('sitsubord').hide();
+                    Ext.getCmp('idAdm').hide();                    
                 }
 
             } else
@@ -632,9 +649,14 @@ Ext.create('Ext.container.Viewport', {
                                 xtype: 'button',
                                 id: 'idSolValr',
                                 text: 'Solicitar Valor',
+                                width: 155,
                                 style: {
 
                                     margin: '5 0 0 0'
+                                },
+                                handler: function(){
+
+                                    Ext.create('desloc.view.cargosGestao.solicitarValor');
                                 }
                             },
                             {
