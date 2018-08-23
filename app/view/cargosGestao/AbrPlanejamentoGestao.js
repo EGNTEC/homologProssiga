@@ -1,4 +1,4 @@
-Ext.define('desloc.view.AbrPlanejamento', {
+Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
     extend: 'Ext.window.Window',
     alias: 'widget.abrplanform',
     title: 'Abertura de Planejamento',
@@ -10,7 +10,7 @@ Ext.define('desloc.view.AbrPlanejamento', {
     align: 'center',
     autoShow: true,
     layout: 'fit',
-    id: 'JanAbrPlan',
+    id: 'JanAbrPlanGest',
 
     requires: [
         'Ext.util.ComponentDragger',
@@ -113,8 +113,8 @@ Ext.define('desloc.view.AbrPlanejamento', {
                 iconCls: 'icon-add',
                 handler: function() {
                     var FormAbrPlan = Ext.getCmp('FormAbrPlan');
-                    var pGrid = Ext.getCmp('gridplan');
-                    var sStore = pGrid.getStore();
+                    //var pGrid = Ext.getCmp('gridplan');
+                    //var sStore = pGrid.getStore();
                     var vMatcol = Ext.getCmp('usuCombo');
                     var comboUnid = Ext.getCmp('uniCombo').getValue();
                     var comboReg = Ext.getCmp('regCombo').getValue();
@@ -129,18 +129,34 @@ Ext.define('desloc.view.AbrPlanejamento', {
                         },
                         //waitMsg:'Enviando dados…',
                         success: function() {
+                            
+                         if(codcargo == 7800){
 
-                            var pGrid = Ext.getCmp('gridplan');
+                            var pGrid = Ext.getCmp('gridCadCoord');
                             var aStore = pGrid.getStore();
                             aStore.load({
                                 params: {
                                     mat: vMatcol.getValue(),
                                     unid: comboUnid,
                                     reg: comboReg
-                                }
+                                 }
                             });
+                          }
 
-                            Ext.getCmp('JanAbrPlan').destroy();
+                          if(codcargo == 6500){
+
+                            var pGrid = Ext.getCmp('gridCadGer');
+                            var aStore = pGrid.getStore();
+                            aStore.load({
+                                params: {
+                                    mat: vMatcol.getValue(),
+                                    unid: comboUnid,
+                                    reg: comboReg
+                                 }
+                            });
+                          }
+
+                         Ext.getCmp('JanAbrPlanGest').destroy();
 
                         },
                         //failure:function(){ Ext.Msg.alert('Aviso', 'Já existe um planejamento para este período.'); }
@@ -148,8 +164,6 @@ Ext.define('desloc.view.AbrPlanejamento', {
                     });
                 }
             }
-
         ]
     }]
-
 });

@@ -4,6 +4,7 @@ require("../session.php");
 include("../conn.php");
 
 $niv = $_SESSION['codniv'];
+$codcargo = $_SESSION['codcargo'];
 $dataHj=date('Y-m-d');
 
 if($niv == 4){
@@ -13,6 +14,12 @@ if($niv == 4){
 }else{
 
    $col = $_GET['mat'];
+}
+
+//Tratamento para os cargos Coordenador regional/Gerente de Opreções
+if($codcargo == 7800 || $codcargo == 6500){
+
+    $col = $_SESSION['matricula'];   
 }
 
 //Tratamento para pegar colaborador demitido
@@ -40,6 +47,7 @@ And          (
                                  And    abpr.stspre <> 4))
              )") or die('erro na consulta planejamento');
 
+           
  #$rowAbpr = mssql_num_rows($queryAbpr);
  $rowAbpr = mssql_fetch_array($queryAbpr);
  $result  = $rowAbpr['result'];
@@ -47,7 +55,7 @@ And          (
 //Não habilita - 1
 
  #echo $dataHj;
- echo  $result;
+ #echo  $result;
 
 //if( ( (strtotime($dataHj) >= strtotime($dataPar)) && $result==1) || $sitafa<>1 ){
 //if ( (strtotime($dataHj) >= strtotime($dataPar) && $result==0 ) || ( (strtotime($dataHj) < strtotime($dataPar) ) && $result==1 ) ){

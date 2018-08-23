@@ -4,6 +4,7 @@ require("session.php");
 include("conn.php");
 
 $niv = $_SESSION['codniv'];
+$codcargo = $_SESSION['codcargo'];
 
 $data = date('Y-m-d');
 $mes  = date('m');
@@ -16,6 +17,12 @@ if($niv == 4){
 }else{
 
    $col = $_GET['mat'];
+}
+
+//Tratamento para os cargos Coordenador regional/Gerente de Opreções
+if($codcargo == 7800 || $codcargo == 6500){
+
+    $col = $_SESSION['matricula'];   
 }
 
 //Tratamento coordenador cadastrando o seu planejamento.

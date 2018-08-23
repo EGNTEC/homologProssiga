@@ -9,6 +9,7 @@ $dia = 01;
 
 $niv = $_SESSION['codniv'];
 $matcad = $_SESSION['matricula'];
+$codcargo = $_SESSION['codcargo'];
 $datcad = date('Y-m-d H:m:s');
 
 //variaveis de formulario
@@ -19,7 +20,7 @@ $montRef = $expRef[1].'/'.$expRef[0].'/'.$dia;
 $mes  = $expRef[0];
 $ano  = $expRef[1];
 $tiptrans = $_POST['tiptrans'];
-
+$stspla = 0;
 
 if($niv==4){
 
@@ -35,12 +36,6 @@ if($niv==4){
    $numreg = $_POST['reg'];
    $numloc = $_POST['unid'];
 
-   //Tratamento nome(substituição matricula)
-   /*if($mat==$col){
-       $mat=$_SESSION['matricula'];
-   }else{
-       $mat = $_POST['mat'];
-   }*/
    //Tratamento coordenador cadastrando o seu planejamento.
    $ResgMat = "SELECT numcad,numreg,numloc From tVTRHfunc Where nomfun='$mat'";
    #var_dump($ResgMat);
@@ -55,6 +50,15 @@ if($niv==4){
    }
    #Fim do tratamento
 }
+
+if($codcargo == 7800 || $codcargo == 6500){
+
+    $mat     = $_SESSION['matricula'];
+    $numreg  = $_SESSION['codreg'];
+    $numloc  = $_SESSION['codund']; 
+
+    $stspla = 3;
+ } 
 
 //Tratamento para encerramentos dos depósitos.
 $strQuery = "SELECT vlrprm FROM tPROSparm WHERE numprm=6";
@@ -76,10 +80,10 @@ if( $result==0 && (strtotime($montRef) >= strtotime($dataPar) ) ){
 				numreg,		numloc,		matfun,		datpla,		tiptrp,		stspla,
 				qtdcli,		qtdkm,		vlrpla)
 			VALUES (
-				'$numreg',	'$numloc',	'$mat',		'$montRef',	$tiptrans,0,
+				'$numreg',	'$numloc',	'$mat',		'$montRef',	$tiptrans,  $stspla,
 				0,			0,			0)";
 
-  //var_dump($query);
+//var_dump($query);
  $dados = mssql_query($query) or die('Erro ao Inserir Abertura de planejamento');
 
 //Monta o dia-dia do planejamento.

@@ -657,6 +657,74 @@ Ext.create('Ext.container.Viewport', {
                                 handler: function(){
 
                                     Ext.create('desloc.view.cargosGestao.solicitarValor');
+                                    var regC = Ext.getCmp('regCombo');
+                                    var uniC = Ext.getCmp('uniCombo');
+                                    var colC = Ext.getCmp('usuCombo');
+                                    var status = Ext.getCmp('statusCombo');
+                                    var mesC = Ext.getCmp('mesCombo');
+                                    var anoC = Ext.getCmp('anoCombo');
+
+                                    //Tratamento para o Coordenador Regional
+                                    if(codcargo == 7800){
+
+                                        Ext.getCmp('gridCadGer').hide();
+                                        Ext.getCmp('solvlr').maximize();
+
+                                        regC.setDisabled(true);
+                                        regC.emptyText = reg;
+                                        regC.applyEmptyText();
+
+                                        uniC.setDisabled(true);
+                                        uniC.emptyText = unid;
+                                        uniC.applyEmptyText();
+
+                                        colC.setDisabled(true);
+                                        colC.emptyText = col;
+                                        colC.applyEmptyText();
+                                        status.setDisabled(true);
+
+                                        colC.setWidth(450);
+                                        mesC.setWidth(265);
+                                        anoC.setMargin('-36 0 0 275');
+                                        anoC.setWidth(175);
+
+                                        status.hide();
+                                        regC.hide();
+                                        uniC.hide();
+                                        anoC.show();
+                                        mesC.show();
+
+
+                                    }
+
+                                    //Tratamento para Gerente de Operações
+                                    if(codcargo == 6800){
+
+                                        Ext.getCmp('gridCadCoord').hide();
+                                    }
+
+                                    //Tratamento para habilitar botão novo planejamento
+                                    Ext.getCmp('btn_novo').setDisabled(true);
+
+                                    Ext.Ajax.request({
+                                        url: '/teste2/php/Planejamento/HabBtnNov.php',
+                                        success: function(response) {
+
+                                            var result = Ext.JSON.decode(response.responseText);
+                                            //console.log(result);
+                                            if (result == 1) {
+                                                Ext.getCmp('btn_novo').setDisabled(false);
+                                            } else {
+                                                Ext.getCmp('btn_novo').setDisabled(true);
+                                                //sStore.load();
+                                            }
+                                        },
+                                        failure: function() {
+
+                                            //Ext.Msg.alert('Mensagem','Problema Na Base de Dados!');
+                                        }
+                                    });
+                                    //Fim do tratamento botão novo
                                 }
                             },
                             {

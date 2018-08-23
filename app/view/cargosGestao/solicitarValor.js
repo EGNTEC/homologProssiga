@@ -207,7 +207,84 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
             }
         ]
 
-      } //Fim da primeira grid
+      }, //Fim da primeira grid
+      {
+        xtype: 'grid',
+        id: 'gridCadGer',
+        heigth: 600,
+        selModel: {
+
+        },
+        layout: 'fit',
+        //store:,
+        features: [{
+             ftype: 'summary' 
+        }],
+        columns: [
+            {
+               xtype: 'actionbuttoncolumn',
+               menuDisabled: true,
+               width: 36,
+               items: [{
+                   iconCls: 'icon-edit'
+               }]
+            },
+            {
+              header: 'Referência outro',
+              //dataIndex: 'datpla',
+              width: 90,
+              id: 'datpla',
+              menuDisabled: true,
+              name: 'datpla',
+              summaryRenderer: function() {
+                  return 'Total:'
+              }
+          }
+      ]
+
+     } // Fim da segunda grid
       
-    ]
+    ],
+
+    //Dock para botões
+    dockedItems: [{
+        xtype: 'toolbar',
+        dock:'bottom',
+        items: [{
+                xtype: 'button',
+                id: 'btn_novo',
+                text: 'Novo',
+                iconCls: 'icon-novo',
+                listeners: {
+
+                    click: function(){
+                        
+                        Ext.getCmp('btn_novo').setDisabled(true);
+                        var colComb = Ext.getCmp('usuCombo').getValue();
+
+                        Ext.Ajax.request({
+                            url: '/teste2/php/Planejamento/ValNov.php',
+                            params: {
+                                mat: colComb
+                            },
+                            success: function(response) {
+
+                                var result = Ext.JSON.decode(response.responseText);
+                                //console.log(result);
+                                if (result == 1) {
+                                    Ext.create('desloc.view.cargosGestao.AbrPlanejamentoGestao');
+                                } else {
+                                    Ext.Msg.alert('Mensagem', 'Não é possível cadastrar um planejamento para o período afastamento/férias.');
+                                }
+                            },
+                            failure: function() {
+                                //Ext.Msg.alert('Mensagem','Problema Na Base de Dados!');
+                            }
+                        });
+
+                    }
+                }
+        }]
+
+    }]
 });
