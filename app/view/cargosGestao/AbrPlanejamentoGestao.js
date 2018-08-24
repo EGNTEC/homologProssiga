@@ -2,7 +2,7 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
     extend: 'Ext.window.Window',
     alias: 'widget.abrplanform',
     title: 'Abertura de Planejamento',
-    height: 190,
+    height: 200,
     width: 350,
     align: 'stretch',
     modal: true,
@@ -79,7 +79,6 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                                     params: { mat: comboUso }
                                 });
                                 comboRef.setDisabled(false)
-
                             }
                         }
                     }
@@ -96,8 +95,37 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                     valueField: 'datpla', //datpla,value
                     triggerAction: 'all',
                     disabled: true,
-                    queryMode: 'local'
-                        //mode: 'local'
+                    //queryMode: 'local'
+                    mode: 'local',
+                    listeners: {
+                        select:{
+                            fn: function(combo, value){
+                                Ext.getCmp('valsol').setDisabled(false);
+                            }
+                        }
+                    }
+                },
+                {
+                    xtype: 'numberfield',
+                    fieldLabel: 'Valor',
+                    hideTrigger: true,
+                    name: 'valsol',
+                    id: 'valsol',
+                    plugins: 'textmask',
+                    mask: 'R$ 9.999.990,00',
+                    money: true,
+                    disabled: true,
+                    allowBlank: false,
+                    listeners: {
+                        change: function(field, value) {
+                            value = parseInt(value, 10);
+                            //field.setValue(value);
+                            if (value < 0) {
+
+                                field.setValue(value * (-1));
+                            }
+                        }
+                    }
                 }
             ]
         }
@@ -113,8 +141,6 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                 iconCls: 'icon-add',
                 handler: function() {
                     var FormAbrPlan = Ext.getCmp('FormAbrPlan');
-                    //var pGrid = Ext.getCmp('gridplan');
-                    //var sStore = pGrid.getStore();
                     var vMatcol = Ext.getCmp('usuCombo');
                     var comboUnid = Ext.getCmp('uniCombo').getValue();
                     var comboReg = Ext.getCmp('regCombo').getValue();
@@ -127,7 +153,6 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                             unid: comboUnid,
                             reg: comboReg
                         },
-                        //waitMsg:'Enviando dados…',
                         success: function() {
                             
                          if(codcargo == 7800){

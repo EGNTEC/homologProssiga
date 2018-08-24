@@ -161,13 +161,6 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
                         editable: false,
                         mode: 'local',
                         lastQuery: ''
-                    },
-                    {
-                        xtype: 'combo',
-                        editable: false,
-                        id: 'gambCombo',
-                        tabIndex: -1,
-                        hidden: false
                     }   
                 ]              
           }]      
@@ -176,8 +169,10 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
           xtype: 'grid',
           id: 'gridCadCoord',
           heigth: 600,
+          store: Ext.create('desloc.store.cargosGestao.listarSolicitarVlr'),
           selModel: {
-
+            selType: 'checkboxmodel',
+            mode: 'MULTI'
           },
           layout: 'fit',
           //store:,
@@ -186,24 +181,70 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
           }],
           columns: [
               {
-                 xtype: 'actionbuttoncolumn',
-                 menuDisabled: true,
-                 width: 36,
-                 items: [{
-                     iconCls: 'icon-edit'
-                 }]   
-
-              },
-              {
                 header: 'Referência',
-                //dataIndex: 'datpla',
+                dataIndex: 'datpla',
                 width: 90,
-                id: 'datpla',
+                id: 'datplage',
                 menuDisabled: true,
-                name: 'datpla',
+                name: 'datplage',
                 summaryRenderer: function() {
                     return 'Total:'
+                }                
+            },
+            {
+                header: 'Matricula',
+                dataIndex: 'numcad',
+                width: 80,
+                menuDisabled: true,
+                hidden: false
+            },
+            {
+                header: 'Nome',
+                dataIndex: 'nomfun',
+                //flex:1,
+                width: 258,
+                menuDisabled: true,
+                summaryType: 'count'
+            },
+            {
+                header: 'Cargo',
+                width: 180,
+                dataIndex: 'cargo',
+                menuDisabled: true
+            },
+            {
+                header: 'Transporte',
+                dataIndex: 'destrp',
+                width: 90,
+                menuDisabled: true
+            },
+            {
+                header: 'Valor Solicitado',
+                dataIndex: 'vlrpla',
+                menuDisabled: true,
+                summaryType: 'sum',
+                renderer: function(val) {
+                    var metodo = Ext.util.Format.maskRenderer('R$ #9.999.990,00', true);
+
+                    if (val.length > 1) {
+
+                        metodo = Ext.util.Format.maskRenderer('R$ #9.999.990,00', true);
+                    }
+
+                    return metodo(val);
                 }
+            },
+            {
+                header: 'Situação',
+                dataIndex: 'dessts',
+                menuDisabled: true
+            },
+            {
+                header: 'Local',
+                width: 380,
+                dataIndex: 'nomloc',
+                menuDisabled: true,
+                hidden: false
             }
         ]
 
