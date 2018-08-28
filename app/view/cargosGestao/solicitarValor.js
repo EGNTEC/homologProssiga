@@ -247,7 +247,6 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
                 hidden: false
             }
         ]
-
       }, //Fim da primeira grid
       {
         xtype: 'grid',
@@ -325,7 +324,37 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
 
                     }
                 }
-        }]
+        },
+        {
+            xtype: 'button',
+            text: 'Buscar',
+            tooltip: 'Localizar Planejamentos',
+            id: 'btn_buscge',
+            iconCls: 'icon-buscar',
+            handler: function() {
+                var pGrid = Ext.getCmp('gridCadCoord');
+                var comboUso = Ext.getCmp('usuCombo');
+                var comboUnid = Ext.getCmp('uniCombo');
+                var comboReg = Ext.getCmp('regCombo');
+                var comboSts = Ext.getCmp('statusCombo');
+                var comboStatus = comboSts.getValue();
+                var comboMes = Ext.getCmp('mesCombo').getValue();
+                var comboAno = Ext.getCmp('anoCombo').getValue();
 
+                var aStore = pGrid.getStore();
+                    aStore.load({
+                        params: {
+                            mat: comboUso.getValue(),
+                            unid: comboUnid.getValue(),
+                            reg: comboReg.getValue(),
+                            sts: comboStatus,
+                            mes: comboMes,
+                            ano: comboAno
+                        }
+                    });
+            }
+        }
+
+        ]
     }]
 });

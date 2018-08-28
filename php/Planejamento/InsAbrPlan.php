@@ -56,7 +56,7 @@ if($codcargo == 7800 || $codcargo == 6500){
     $mat     = $_SESSION['matricula'];
     $numreg  = $_SESSION['codreg'];
     $numloc  = $_SESSION['codund']; 
-
+    $vlrdes  = $_POST['valsol'];
     $stspla = 3;
  } 
 
@@ -82,7 +82,7 @@ if( $result==0 && (strtotime($montRef) >= strtotime($dataPar) ) ){
 				'$numreg',	'$numloc',	'$mat',		'$montRef',	$tiptrans,  $stspla,
 				0,			0,			0)";
 
- var_dump($query);
+ //var_dump($query);
  $dados = mssql_query($query) or die('Erro ao Inserir Abertura de planejamento');
 
 //Monta o dia-dia do planejamento.
@@ -92,24 +92,28 @@ $strReturn    = "SELECT numseq FROM tPROSabpl
                       AND DATEPART(MONTH,datpla)=$mes
                       AND DATEPART(YEAR,datpla)=$ano";
 
- var_dump($strReturn);
+ //var_dump($strReturn);
 
 $queryRetorno = mssql_query($strReturn);
 $arrayRetorno = mssql_fetch_array($queryRetorno);
 $numseq = $arrayRetorno['numseq'];
 
 $exec = "Exec dbo.Pr_CadastrarPlanejamento $numseq,'$montRef',$mat";
-var_dump($exec);
+//var_dump($exec);
 $gerPlan = mssql_query($exec);
 
-//Tratamento para inserir regristro na tabela do dia-dia
+//Tratamento para inserir regristro na tabela do dia-dia do planejamento
 
 $retData = "Select max(datdes) As data From tPROSplde Where seqpla = $numseq";
 $queryretData = mssql_query($retData);
 $arrayretData = mssql_fetch_array($queryretData);
+$dataDesloc = $arrayretData['data'];
+
+$strUpdtData   = "Update tPROSplde Set vlrdes = $vlrdes Where datdes = '$dataDesloc'";
+$queryUpdtData = mssql_query($strUpdtData);
+//var_dump($strUpdtData);
 
 //Fim do Tratamento
-
 
 //Fim montagem
 

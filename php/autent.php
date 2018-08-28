@@ -126,6 +126,21 @@ $_SESSION['descsit'] 		= $sit;
 	$_SESSION['descprograma']	= $descprograma; 	
  }
 
+//Resgatar valor teto dos cargos de gestão
+if($dados['codcar'] == 7800){ //coordenador Regional
+	$strValTet = "Select vlrprm From tPROSparm Where numprm = 7";
+	$queryValTet = mssql_query($strValTet);
+	$arrayValTet = mssql_fetch_array($queryValTet);
+	$_SESSION['vlrprm'] = $arrayValTet['vlrprm'];
+}
+if($dados['codcar'] == 6500){ //Gerente de Operações
+	$strValTet = "Select vlrprm From tPROSparm Where numprm = 8";
+	$queryValTet = mssql_query($strValTet);
+	$arrayValTet = mssql_fetch_array($queryValTet);
+	$_SESSION['vlrprm'] = $arrayValTet['vlrprm'];
+}
+
+
 
 #variaveis para limite de tempo
 $_SESSION['limite'] = 3000; //equivale a 5 min 300 || 1800 = 30min || 3600 = 60min || 3000=50min

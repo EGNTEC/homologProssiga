@@ -27,17 +27,17 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                 success: function(response) {
 
                     var result = Ext.JSON.decode(response.responseText);
-                    //console.log(result);
+                    
                     if (result == 1) {
-                        //Código...
+                        
                     } else {
-                        Ext.getCmp('btn_nov').setDisabled(false);
+
                         Ext.getCmp('btn_novo').setDisabled(false);
-                        //sStore.load();
+                        
                     }
                 },
                 failure: function() {
-                    //Ext.Msg.alert('Mensagem','Problema Na Base de Dados!');
+                    
                 }
             });
         }
@@ -95,7 +95,6 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                     valueField: 'datpla', //datpla,value
                     triggerAction: 'all',
                     disabled: true,
-                    //queryMode: 'local'
                     mode: 'local',
                     listeners: {
                         select:{
@@ -124,6 +123,16 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
 
                                 field.setValue(value * (-1));
                             }
+
+                            if(value > vlrparm){
+
+                                Ext.getCmp('btn_inserir').setDisabled(true)
+                                Ext.Msg.alert('Mensagem','O Valor solicitado é maior que o valor limite de R$ '+vlrparm);
+
+                            }else{
+
+                                Ext.getCmp('btn_inserir').setDisabled(false)
+                            }
                         }
                     }
                 }
@@ -136,7 +145,7 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
         dock: 'bottom',
         items: [{
                 xtype: 'button',
-                id: 'btn_ins',
+                id: 'btn_inserir',
                 text: 'Ok',
                 iconCls: 'icon-add',
                 handler: function() {
@@ -184,8 +193,7 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                          Ext.getCmp('JanAbrPlanGest').destroy();
 
                         },
-                        //failure:function(){ Ext.Msg.alert('Aviso', 'Já existe um planejamento para este período.'); }
-                        failure: function() { Ext.Msg.alert('Aviso', 'Não é possível abrir planejamento para esse período.'); }
+                        failure: function() { Ext.Msg.alert('Mensagem', 'Não é possível abrir planejamento.'); }
                     });
                 }
             }

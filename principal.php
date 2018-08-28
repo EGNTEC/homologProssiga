@@ -14,6 +14,7 @@ $codund   = $_SESSION['codund'];
 $codreg   = $_SESSION['codreg'];
 $codcargo = $_SESSION['codcargo'];
 $codprg   = $_SESSION['usu_codprg'];
+$vlrparm  = $_SESSION['vlrprm'];
 #=============================================
 $reg   = $_SESSION['nomreg'];
 $unid  = $_SESSION['nomund'];
@@ -68,10 +69,10 @@ switch ($mes) {
   case 07:
       $competencia = 'Julho';
     break;
-  case 08:
+  case 8:
       $competencia = 'Agosto';
     break;
-  case 09:
+  case 9:
       $competencia = 'Setembro';
     break;
   case 10:
@@ -83,7 +84,6 @@ switch ($mes) {
   case 12:
       $competencia = 'Dezembro';
     break;
-
 
   default:
     # code...
@@ -146,6 +146,7 @@ $competencia = $competencia.'/'.$ano;
    var codprg ="<?php echo $codprg ;?>"; 
    var programa ="<?php echo $programa ;?>"; 
    var descprograma ="<?php echo $descprograma ;?>"; 
+   var vlrparm ="<?php echo $vlrparm ;?>";
 
 </script>
 
