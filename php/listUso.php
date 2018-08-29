@@ -1,12 +1,13 @@
 <?php
 	//chama o arquivo de conexão com o bd
   require("session.php");
-	include("conn.php");
+  include("conn.php");
 
   $regId = $_GET['regId'];
   $uniId = $_GET['uniId'];
   $niv   = $_SESSION['codniv'];
   $locAdd= $_GET['locAdd'];
+  $codcargo = $_SESSION['codcargo'];
 
   if($niv == 1){
 
@@ -21,6 +22,12 @@
 
   }
 
+  //Tratamento para os cargos G.O/G.G.O/Analistas G.O
+  if($codcargo == 6500){
+
+    $queryString = "SELECT numcad,nomfun,numloc,numreg FROM tVTRHfunc WHERE numloc = $uniId And codcar = 7800 order by nomfun";
+
+  }
 
   //var_dump($queryString);
 	//consulta sql

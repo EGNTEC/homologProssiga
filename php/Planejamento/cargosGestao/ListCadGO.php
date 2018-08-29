@@ -33,7 +33,7 @@ $queryString = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 1
 			abpl.tiptrp AS tiptrp,
 	   (select vlrtrp from tPROSprtrge prtr
 			where prtr.tiptrp = abpl.tiptrp
-			and   prtr.parm =7800
+			and   prtr.parm =6500
 			and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
 									where prtr2.tiptrp = prtr.tiptrp
 									and   prtr2.numprg = prtr.numprg 
@@ -47,7 +47,7 @@ $queryString = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 1
 				INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
                 INNER JOIN tPROSprtrge prtr ON prtr.tiptrp = abpl.tiptrp 
     
-    WHERE abpl.matfun = $col ";
+    WHERE abpl.matfun = $col And abpl.datpla > '03-01-2018'";
 
 $query = mssql_query($queryString) or die('Erro ao filtrar aberturas');
 

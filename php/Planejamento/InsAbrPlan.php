@@ -57,7 +57,7 @@ if($codcargo == 7800 || $codcargo == 6500){
     $numreg  = $_SESSION['codreg'];
     $numloc  = $_SESSION['codund']; 
     $vlrdes  = $_POST['valsol'];
-    $stspla = 3;
+    $stspla = 2;
  } 
 
 //Tratamento para encerramentos dos depósitos.

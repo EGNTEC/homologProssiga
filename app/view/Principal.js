@@ -61,6 +61,7 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('idencdep').hide();
                 Ext.getCmp('locadd').hide();
                 Ext.getCmp('idSolValr').hide();
+                Ext.getCmp('idGerSolVlr').hide();
 
             } else
             if (niv == 3) {
@@ -79,6 +80,7 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('btnNReali').hide();
                 Ext.getCmp('locadd').hide();
                 Ext.getCmp('idSolValr').hide();
+                Ext.getCmp('idGerSolVlr').hide();
 
                 if (codcargo == 6600) {
 
@@ -138,11 +140,13 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('sitsubord').hide();
                     Ext.getCmp('idAdm').hide();
                     Ext.getCmp('btnPreGer').hide();
+                    Ext.getCmp('idGerSolVlr').hide();
                                         
                 }
 
                 if(codcargo == 6500){
                     Ext.getCmp('idSolValr').show();
+                    Ext.getCmp('idGerSolVlr').show();
                     Ext.getCmp('histsaldo').show();
                     Ext.getCmp('btncadplan').hide();
                     Ext.getCmp('btnNReali').hide();
@@ -155,9 +159,6 @@ Ext.create('Ext.container.Viewport', {
             if (niv == 1) {
                 Ext.getCmp('histsaldo').hide();
                 Ext.getCmp('sitsubord').hide();
-                //Ext.getCmp('btnRelPres').show();
-                //Ext.getCmp('btnRelPlan').show();
-                //Ext.getCmp('btnOut').show();
                 Ext.getCmp('idgerplanreg').show(); ////hide
                 Ext.getCmp('sit').hide();
                 Ext.getCmp('idgrager').show();
@@ -168,7 +169,8 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('btnPre').show();
                 Ext.getCmp('idencdep').show();
                 Ext.getCmp('locadd').show();
-                Ext.getCmp('idSolValr').show();
+                Ext.getCmp('idSolValr').hide();
+                Ext.getCmp('idGerSolVlr').hide();
                 
             }
         }
@@ -539,34 +541,18 @@ Ext.create('Ext.container.Viewport', {
                                     else
                                     if (niv == 2) { //Tratamento de Nível 2 - Regional
                                         Ext.getCmp('btn_nov').hide();
-                                        //Ext.getCmp('btn_encplan').setDisabled(true);
-                                        //Ext.getCmp('btn_aut').setDisabled(true);
                                         Ext.getCmp('btn_val').setDisabled(true);
                                         Ext.getCmp('btn_reab').setDisabled(true);
-                                        //Ext.getCmp('btSair').setMargin('0 0 0 -200')
-                                        //Ext.getCmp('btn_reab').show();
-
-                                        //regC.setDisabled(true);
-                                        //regC.emptyText = reg;
-                                        //regC.applyEmptyText();
                                         regC.hide();
 
                                         uniC.setDisabled(false);
                                         colC.setDisabled(false);
 
-                                        //setar css para combo regional
-                                        //regC.setWidth(350);
-                                        //setar css para combo unidade
-                                        //uniC.setMargin('-36 0 0 370');
                                         uniC.setWidth(450);
                                         //setar css para combo colaborador
                                         colC.setWidth(450);
-                                        //colC.setMargin('-36 0 0 0');
                                         //setar css para combo situação
                                         status.setWidth(450);
-                                        //status.setMargin('-73 0 0 370');
-                                        //setar css para combo refrência
-                                        //mesC.setMargin('-73 0 0 0');
                                         mesC.setWidth(265);
                                         anoC.setMargin('-36 0 0 275');
                                         anoC.setWidth(175);
@@ -655,20 +641,29 @@ Ext.create('Ext.container.Viewport', {
                                     margin: '5 0 0 0'
                                 },
                                 handler: function(){
-
+                                    //Chamar tela de solicitar valor
                                     Ext.create('desloc.view.cargosGestao.solicitarValor');
-                                    var regC = Ext.getCmp('regCombo');
-                                    var uniC = Ext.getCmp('uniCombo');
-                                    var colC = Ext.getCmp('usuCombo');
-                                    var status = Ext.getCmp('statusCombo');
-                                    var mesC = Ext.getCmp('mesCombo');
-                                    var anoC = Ext.getCmp('anoCombo');
 
                                     //Tratamento para o Coordenador Regional
                                     if(codcargo == 7800){
 
                                         Ext.getCmp('gridCadGer').hide();
                                         Ext.getCmp('solvlr').maximize();
+                                    }                                    
+
+                                    //Tratamento para Gerente de Operações
+                                    if(codcargo == 6500){
+
+                                        Ext.getCmp('gridCadCoord').hide();
+                                        Ext.getCmp('solvlr').maximize();
+                                    }                                    
+
+                                    var regC = Ext.getCmp('regCombo');
+                                    var uniC = Ext.getCmp('uniCombo');
+                                    var colC = Ext.getCmp('usuCombo');
+                                    var status = Ext.getCmp('statusCombo');
+                                    var mesC = Ext.getCmp('mesCombo');
+                                    var anoC = Ext.getCmp('anoCombo');
 
                                         regC.setDisabled(true);
                                         regC.emptyText = reg;
@@ -695,14 +690,6 @@ Ext.create('Ext.container.Viewport', {
                                         mesC.show();
 
 
-                                    }
-
-                                    //Tratamento para Gerente de Operações
-                                    if(codcargo == 6800){
-
-                                        Ext.getCmp('gridCadCoord').hide();
-                                    }
-
                                     //Tratamento para habilitar botão novo planejamento
                                     Ext.getCmp('btn_novo').setDisabled(true);
 
@@ -727,6 +714,59 @@ Ext.create('Ext.container.Viewport', {
                                     //Fim do tratamento botão novo
                                 }
                             },
+                            {
+                                xtype: 'button',
+                                id: 'idGerSolVlr',
+                                width: 155,
+                                text: 'Gerenciar Valor',
+                                style: {
+
+                                    margin: '5 0 0 0'
+                                },
+                                handler: function() {
+                                    //Chamar tela de solicitar valor
+                                    Ext.create('desloc.view.cargosGestao.gerSolicitarValor');
+                                    Ext.getCmp('gersolvlr').maximize();
+
+                                    var regC = Ext.getCmp('regCombo');
+                                    var uniC = Ext.getCmp('uniCombo');
+                                    var colC = Ext.getCmp('usuCombo');
+                                    var status = Ext.getCmp('statusCombo');
+                                    var mesC = Ext.getCmp('mesCombo');
+                                    var anoC = Ext.getCmp('anoCombo');
+                                
+                                    Ext.getCmp('btn_novo').hide();
+                                    Ext.getCmp('btn_validar').setDisabled(true);
+                                    Ext.getCmp('btn_reabrir').setDisabled(true);
+                                    regC.setDisabled(true);
+                                    regC.emptyText = reg;
+                                    regC.applyEmptyText();
+
+                                    uniC.setDisabled(true);
+                                    uniC.emptyText = unid;
+                                    uniC.applyEmptyText();
+
+                                    colC.setDisabled(false);
+                                    colC.emptyText = "Selecione um colaborador";                                    
+                                    
+                                    colC.setWidth(450);
+                                    mesC.setWidth(265);
+                                    anoC.setMargin('-36 0 0 275');
+                                    anoC.setWidth(175);
+
+                                    regC.hide();
+                                    uniC.hide();
+                                    anoC.show();
+                                    mesC.show();
+
+                                    status.emptyText = "Selecione uma situação";
+                                    status.setWidth(450);
+
+                                    colC.store.load({
+                                        params: { uniId: codund }
+                                    });
+                                }
+                            },  
                             {
                                 xtype: 'button',
                                 id: 'btnNReali',

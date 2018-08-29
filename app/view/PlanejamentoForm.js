@@ -536,86 +536,7 @@ Ext.define('desloc.view.PlanejamentoForm', {
                     }
                 }
 
-            },
-            /*{
-              xtype:'button',
-              id:'btn_aut',//btn_valid
-              text: 'Autorizar', //trocar a descrição do botão validar para autorizar
-              iconCls:'icon-validar',
-              handler:function(){
-
-                 var pGrid  = Ext.getCmp('gridplan');
-                 var sStore = pGrid.getStore();
-                 var selectedRecords = pGrid.getSelectionModel().getSelection();
-                 var vSituacao = selectedRecords[0].get("dessts");
-                 var vIdAbrt = selectedRecords[0].get("numseq");
-                 var comboSts = Ext.getCmp('statusCombo');
-
-                 if (selectedRecords.length){
-                    sStore.remove(selectedRecords);
-                    Ext.apply(sStore.getProxy().extraParams, {
-                        btnRbr: 0,
-
-                    });
-                    sStore.sync({
-
-                    success: function (conn, response, options, eOpts){
-                        var result = Ext.JSON.decode(conn.responseText, true);
-
-                        if (!result){ // caso seja null
-                             result = {};
-                             result.success = true;
-                        }
-
-                        if(result.success){
-
-                             Ext.Msg.alert('Msg','Registro Alterado com Sucesso!',function(btn,text){
-
-                         if(btn=="ok"){
-
-                             sStore.load({
-
-                                params:{
-                                    sts:  comboSts.getValue()
-                                  }
-
-                             });
-
-                             Ext.getCmp('btn_aut').setDisabled(false);
-                             Ext.getCmp('btn_reab').setDisabled(false);
-                            }
-
-                         });
-                        }else{
-                           Ext.Msg.alert('Msg','Erro ao alterar,situações diferentes!');
-                           pGrid.getSelectionModel().deselectAll();
-                           sStore.load({
-
-                                params:{
-                                    sts:  comboSts.getValue()
-                                  }
-
-                             });
-                        }
-                    },
-                    failure: function () {
-
-                        Ext.Msg.alert('Msg', 'Problema na base de Dados, consultar UPDATE!.');
-                        sStore.load({
-
-                          params:{
-                            sts: comboSts.getValue()
-                          }
-
-                        });
-                     }
-
-                   });
-                }
-
-              }
-
-            },*/
+            },            
             {
                 xtype: 'button',
                 id: 'btn_val', //btn_autori
@@ -806,18 +727,10 @@ Ext.define('desloc.view.PlanejamentoForm', {
                                 //console.log(result);
                                 if (result == 1) {
 
-                                    //Ext.Msg.alert('Msg','Existem Planejamentos em Andamento!');
-                                    /*if(niv==4 && (comboStatus==null || comboStatus=="")){
-                                      Ext.getCmp('btn_encplan').setDisabled(false);
-                                     sStore.load();
-                                    }*/
-                                    //Ext.getCmp('btn_nov').setDisabled(true);
                                     Ext.getCmp('btn_nov').setDisabled(false);
                                     //sStore.load();
                                 } else {
 
-                                    //Ext.getCmp('btn_nov').show();
-                                    //Ext.getCmp('btn_nov').setDisabled(false);
                                     Ext.getCmp('btn_nov').setDisabled(true);
                                 }
 
@@ -842,28 +755,7 @@ Ext.define('desloc.view.PlanejamentoForm', {
 
                             Ext.getCmp('btn_val').setDisabled(true);
                             Ext.getCmp('btn_reab').setDisabled(true);
-                            /*Ext.getCmp('btn_encplan').setDisabled(true);
-                            Ext.getCmp('btn_txt').setDisabled(true);
-                            Ext.getCmp('btn_prestacao').setDisabled(true);
-                            if(niv==1){
-                              Ext.getCmp('btn_reab').setDisabled(false);
-                              Ext.getCmp('btn_aut').setDisabled(false);
-                            }else
-                            if(niv==2){
-                               Ext.getCmp('btn_aut').setDisabled(false);
-                               Ext.getCmp('btn_reab').setDisabled(false);
-                            }else
-                            if(niv==3) {
-                               Ext.getCmp('btn_aut').setDisabled(false);
-                               Ext.getCmp('btn_reab').setDisabled(false);
-                              }else
-                              if(niv==4){
-                              Ext.getCmp('btn_reab').setDisabled(true);
-                            }else{
-                              Ext.getCmp('btn_reab').setDisabled(false);
-                            }
-
-                            Ext.getCmp('btn_val').setDisabled(true);*/
+                            
 
                             break;
 
@@ -879,28 +771,13 @@ Ext.define('desloc.view.PlanejamentoForm', {
                             break;
                         case 3:
 
-                            //Ext.getCmp('btn_txt').setDisabled(false);
-                            //Ext.getCmp('btn_encplan').setDisabled(true);
-                            //Ext.getCmp('btn_aut').setDisabled(true);
                             Ext.getCmp('btn_val').setDisabled(true);
                             Ext.getCmp('btn_reab').setDisabled(true);
 
-                            /*if((cboReg==null || cboReg=="") ||
-                              (cboUnid==null || cboUnid=="") || (cboUso==null || cboUso==""))
-                            {
-                              Ext.getCmp('btn_prestacao').setDisabled(true);
-
-                             }else{
-                              Ext.getCmp('btn_reab').setDisabled(false);
-                              Ext.getCmp('btn_prestacao').setDisabled(false);
-
-                             }*/
                             break;
 
                         default:
 
-                            //Ext.getCmp('btn_encplan').setDisabled(true);
-                            //Ext.getCmp('btn_aut').setDisabled(true);
                             Ext.getCmp('btn_val').setDisabled(true);
                             Ext.getCmp('btn_reab').setDisabled(true);
 
@@ -909,135 +786,7 @@ Ext.define('desloc.view.PlanejamentoForm', {
 
                 }
 
-            },
-            /*{
-
-                        xtype:'button',
-                        text: 'Abrir Prestação',
-                        id:'btn_prestacao',
-                        iconCls:'icon-prestacao',
-                        handler:function(){ //inicio função click
-
-                          var gGrid  = Ext.getCmp('gridplan');
-                          var gStore = gGrid.getStore();
-                          var selectedRecords = gGrid.getSelectionModel().getSelection();
-                          var comboSts = Ext.getCmp('statusCombo');
-                          var comboStatus = comboSts.getValue();
-                          var vSeqpla = selectedRecords[0].get("numseq");
-                          var vTiptrp = selectedRecords[0].get("tiptrp");
-                          var vNumcad = selectedRecords[0].get("numcad");
-
-                          Ext.Ajax.request({
-                               url :'/php/Prestacao/HabPrest.php',
-                               //action: 'post',
-                               params : {
-                                  numcad:vNumcad,
-                                  numseq:vSeqpla,
-                                  tiptrp:vTiptrp
-
-                                },
-                                success: function (conn, response, options, eOpts){
-                                 var result = Ext.JSON.decode(conn.responseText, true);
-                                         //console.log(result);
-                                 if (!result){ // caso seja null
-                                      result = {};
-                                      result.success = true;
-                                 }
-
-                                 if(result.success){
-                                     Ext.Msg.alert('Msg','Prestação de contas aberta com sucesso!');
-                                         gStore.load({
-
-                                            params:{
-                                                sts:  comboSts.getValue()
-                                              }
-
-                                            });
-                                          }
-                                          else{
-                                           Ext.Msg.alert('Msg','Já existe prestação de contas aberta para este planejamento!');
-                                             gStore.load({
-
-                                               params:{
-                                                sts:  comboSts.getValue()
-                                              }
-                                         });
-                                     }
-                                },
-                                failure: function(){
-
-                                 Ext.Msg.alert('Msg', 'Já existe prestação de contas aberta para este planejamento!');
-                            }
-
-                          });
-
-
-                         }//fim função click
-                     },*/
-            /*{
-
-                        xtype:'button',
-                        text: 'Arquivo de Importação',
-                        id:'btn_txt',
-                        iconCls:'icon-importar',
-                        handler:function(){ //inicio função click
-
-                          var gGrid  = Ext.getCmp('gridplan');
-                          var selectedRecords = gGrid.getSelectionModel().getSelection();
-                          var gStore = gGrid.getStore();
-                          var comboSts = Ext.getCmp('statusCombo');
-                          var comboStatus = comboSts.getValue();
-
-                          if (selectedRecords.length){
-                                gStore.remove(selectedRecords);
-                                Ext.apply(gStore.getProxy().extraParams,{
-                                    btnRbr: 2,
-
-                                });
-                                gStore.sync({
-
-                                success: function (conn, response, options, eOpts){
-                                    var result = Ext.JSON.decode(conn.responseText, true);
-
-                                    if (!result){ // caso seja null
-                                         result = {};
-                                         result.success = true;
-                                    }
-
-                                    if(result.success){
-
-                                         Ext.Msg.alert('Msg','Arquivo gerado, verifique a pasta!');
-                                         gStore.load({
-
-                                            params:{
-                                                sts:  comboSts.getValue()
-                                              }
-
-                                         });
-
-                                    }else{
-                                       Ext.Msg.alert('Msg','Erro ao gerar arquivo!');
-                                       gStore.load({
-
-                                            params:{
-                                                sts:  comboSts.getValue()
-                                              }
-
-                                         });
-
-                                    }
-                                },
-                                failure: function () {
-
-                                    Ext.Msg.alert('Msg', 'Problema na base de Dados, ao gerar arquivo!.');
-
-                                }
-
-                               });
-                            }
-
-                          }//fim função click
-                       },*/
+            },            
             {
                 xtype: 'button',
                 id: 'btn_filtro',

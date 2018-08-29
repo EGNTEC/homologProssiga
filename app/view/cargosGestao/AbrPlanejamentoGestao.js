@@ -189,11 +189,12 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                                  }
                             });
                           }
-
+                         
+                         Ext.Msg.alert('Mensagem', 'Solicitação Realizada Com Sucesso.'); 
                          Ext.getCmp('JanAbrPlanGest').destroy();
 
                         },
-                        failure: function() { Ext.Msg.alert('Mensagem', 'Não é possível abrir planejamento.'); }
+                        failure: function() { Ext.Msg.alert('Mensagem', 'Não foi possível realizar a solicitação.'); }
                     });
                 }
             }

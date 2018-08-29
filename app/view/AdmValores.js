@@ -87,7 +87,7 @@ Ext.define('desloc.view.AdmValores', {
                                         comboUnid.store.load({
                                             params: { regId: combo.getValue() }
                                         });
-                                        comboUnid.setDisabled(false);
+                                        comboUnid.setDisabled(false);                                        
                                     }
                                 }
                             }

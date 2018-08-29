@@ -18,7 +18,7 @@ $mes    = $_GET['mes'];
 $ano    = $_GET['ano'];
 
 
-$queryString = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 103),4,7) AS datpla,
+$String = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 103),4,7) AS datpla,
 			func.nomloc AS nomloc,
 			func.numcad AS numcad,
 			func.nomfun AS nomfun,
@@ -45,11 +45,27 @@ $queryString = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 1
                 INNER JOIN tPROStptr tptr ON abpl.tiptrp = tptr.tiptrp
 				INNER JOIN tPROSstts stts ON abpl.stspla = stts.numsts
 				INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
-                INNER JOIN tPROSprtrge prtr ON prtr.tiptrp = abpl.tiptrp 
-    
-    WHERE abpl.matfun = $col ";
+                INNER JOIN tPROSprtrge prtr ON prtr.tiptrp = abpl.tiptrp ";
 
-$query = mssql_query($queryString) or die('Erro ao filtrar aberturas');
+if($mat != "" || $mat != null){
+
+	$queryString = " Where abpl.matfun = $mat And func.codcar = 7800 And func.numloc = $codreg";
+	
+	if($sts != "" || $sts != null){
+
+		$situacao = " And abpl.stspla = $sts" ;
+	}
+	
+}else{
+
+    $queryString = " Where abpl.stspla = 2 And func.codcar = 7800 And func.numloc = $codreg";
+}
+
+$result = $String.$queryString.$situacao;
+
+//var_dump($result);
+
+$query = mssql_query($result) or die('Erro ao filtrar solicitacao');
 
 $rows = array('data' => array());
 while($abrplan = mssql_fetch_assoc($query)) {

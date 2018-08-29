@@ -31,8 +31,7 @@ if($niv==1){
                   FROM tprossldo sldo
                      INNER JOIN tVTRHfunc func ON sldo.matfun = func.numcad";
 
-
-                     if($und!="" && $mat==""){
+                    if($und!="" && $mat==""){
 
                         $queryCond =" Where func.numloc=$und";
                      }else
