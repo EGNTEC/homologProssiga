@@ -360,10 +360,33 @@ Ext.define('desloc.view.cargosGestao.gerSolicitarValor',{
                     method: 'POST',
                     params: { data: Ext.encode(selected)},
                     success: function(response){
+
+                        var comboUso = Ext.getCmp('usuCombo');
+                        var comboUnid = Ext.getCmp('uniCombo');
+                        var comboReg = Ext.getCmp('regCombo');
+                        var comboSts = Ext.getCmp('statusCombo');
+                        var comboStatus = comboSts.getValue();
+                        var comboMes = Ext.getCmp('mesCombo').getValue();
+                        var comboAno = Ext.getCmp('anoCombo').getValue();
+                        
                         var result = Ext.JSON.decode(response.responseText);
 
-                        if (result == 0) {}
+                        if (result == 0) {
 
+                            Ext.Msg.alert('Mensagem','Valor solicitado validado.');
+                            
+                            var aStore = grid.getStore();
+                            aStore.load({
+                                params: {
+                                    mat: comboUso.getValue(),
+                                    unid: comboUnid.getValue(),
+                                    reg: comboReg.getValue(),
+                                    sts: comboStatus,
+                                    mes: comboMes,
+                                    ano: comboAno
+                                }
+                            });
+                        }
                     },
                     failure:{
 
@@ -379,9 +402,77 @@ Ext.define('desloc.view.cargosGestao.gerSolicitarValor',{
                 text: 'Reabrir',
                 iconCls: 'icon-reabrir',
                 handler: function() {
- 
+                    
+                var grid = Ext.getCmp('gridGerSolVlr');
+                var selectedRecords = grid.getSelectionModel().getSelection();
+
+                var selected = [];
+                Ext.each(selectedRecords, function(item) {
+                    selected.push(item.data.numseq);
+                });
+                    Ext.Ajax.request({
+                        url: '/teste2/php/Planejamento/cargosGestao/reabrirSolicitacao.php',
+                        method: 'POST',
+                        params: { data: Ext.encode(selected)},
+                        success: function(response){
+
+                            var comboUso = Ext.getCmp('usuCombo');
+                            var comboUnid = Ext.getCmp('uniCombo');
+                            var comboReg = Ext.getCmp('regCombo');
+                            var comboSts = Ext.getCmp('statusCombo');
+                            var comboStatus = comboSts.getValue();
+                            var comboMes = Ext.getCmp('mesCombo').getValue();
+                            var comboAno = Ext.getCmp('anoCombo').getValue();
+                            
+                            var result = Ext.JSON.decode(response.responseText);
+
+                            if (result == 0) {
+
+                                Ext.Msg.alert('Mensagem','Valor solicitado reaberto.');
+                                
+                                var aStore = grid.getStore();
+                                aStore.load({
+                                    params: {
+                                        mat: comboUso.getValue(),
+                                        unid: comboUnid.getValue(),
+                                        reg: comboReg.getValue(),
+                                        sts: comboStatus,
+                                        mes: comboMes,
+                                        ano: comboAno
+                                    }
+                                });
+                            }
+                        },
+                        failure:{
+
+                        }  
+                        
+                    });
                 } 
-             } // Fim do botão reabrir
+             }, // Fim do botão reabrir
+             {
+                xtype: 'button',
+                id: 'btn_filtro',
+                text: 'Limpar Filtros',
+                iconCls: 'icon-filtro',
+                listeners: {
+                    click: function() {
+
+                        var Combreg = Ext.getCmp('regCombo');
+                        var Combunid = Ext.getCmp('uniCombo');
+                        var Combusu = Ext.getCmp('usuCombo');
+                        var Combsts = Ext.getCmp('statusCombo');
+                        var CombMes = Ext.getCmp('mesCombo');
+                        var CombAno = Ext.getCmp('anoCombo');
+
+                        Combreg.reset();
+                        Combunid.reset();
+                        Combsts.reset();
+                        CombMes.reset();
+                        CombAno.reset();                        
+                    }
+                }
+            }// Fim do limpar filtros
         ]
     }]
 });

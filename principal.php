@@ -15,6 +15,8 @@ $codreg   = $_SESSION['codreg'];
 $codcargo = $_SESSION['codcargo'];
 $codprg   = $_SESSION['usu_codprg'];
 $vlrparm  = $_SESSION['vlrprm'];
+$stspla   = $_SESSION['vlrprm'];
+$numseq   = $_SESSION['numseq'];
 #=============================================
 $reg   = $_SESSION['nomreg'];
 $unid  = $_SESSION['nomund'];
@@ -147,6 +149,8 @@ $competencia = $competencia.'/'.$ano;
    var programa ="<?php echo $programa ;?>"; 
    var descprograma ="<?php echo $descprograma ;?>"; 
    var vlrparm ="<?php echo $vlrparm ;?>";
+   var stspla  ="<?php echo $stspla ;?>";
+   var numseq  ="<?php echo $numseq ;?>";
 
 </script>
 

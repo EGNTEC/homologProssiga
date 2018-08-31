@@ -221,6 +221,7 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
             {
                 header: 'Valor Solicitado',
                 dataIndex: 'vlrpla',
+                width: 130,
                 menuDisabled: true,
                 summaryType: 'sum',
                 renderer: function(val) {
@@ -246,7 +247,20 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
                 menuDisabled: true,
                 hidden: false
             }
-        ]
+        ],
+        listeners: {
+
+            itemClick: function(grid, record, item, index, e, eOpts) {
+               var grid = Ext.getCmp('gridGerSolVlr');
+               var selectedRecords = grid.getSelectionModel().getSelection();
+               stspla = selectedRecords[0].get("stspla");
+
+               if(stspla == 0){
+
+                  Ext.create('desloc.view.cargosGestao.AbrPlanejamentoGestaoEdt');
+               }   
+             }
+          }
       }, //Fim da primeira grid
       {
         xtype: 'grid',
@@ -329,7 +343,16 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
             menuDisabled: true,
             hidden: false
         }
-      ]
+      ],
+      listeners: {
+
+        itemClick: function(grid, record, item, index, e, eOpts) {
+           var grid = Ext.getCmp('gridGerSolVlr');
+           var selectedRecords = grid.getSelectionModel().getSelection();
+           stspla = selectedRecords[0].get("stspla");
+
+         }
+      }
 
      } // Fim da segunda grid
       

@@ -132,12 +132,33 @@ if($dados['codcar'] == 7800){ //coordenador Regional
 	$queryValTet = mssql_query($strValTet);
 	$arrayValTet = mssql_fetch_array($queryValTet);
 	$_SESSION['vlrprm'] = $arrayValTet['vlrprm'];
+	$matricula = $dados['numcad'];
+
+	//Resgatar situação do planejamento
+	$strSituacao = "Select Max(datpla),stspla,numseq From tPROSabpl Where matfun = $matricula Group By datpla,stspla";
+	$querySituacao = mssql_query($strSituacao);
+	$arrySituacao  = mssql_fetch_array($querySituacao);
+	$stspla = $arrySituacao['stspla'];
+	$numseq = $arrySituacao['numseq'];
+	$_SESSION['vlrprm'] = $stspla;  
+	$_SESSION['numseq'] = $numseq;
+
 }
 if($dados['codcar'] == 6500){ //Gerente de Operações
 	$strValTet = "Select vlrprm From tPROSparm Where numprm = 8";
 	$queryValTet = mssql_query($strValTet);
 	$arrayValTet = mssql_fetch_array($queryValTet);
 	$_SESSION['vlrprm'] = $arrayValTet['vlrprm'];
+	$matricula = $dados['numcad'];
+
+	//Resgatar situação do planejamento
+	$strSituacao = "Select Max(datpla),stspla,numseq From tPROSabpl Where matfun = $matricula Group By datpla,stspla";
+	$querySituacao = mssql_query($strSituacao);
+	$arrySituacao  = mssql_fetch_array($querySituacao);
+	$stspla = $arrySituacao['stspla'];
+	$numseq = $arrySituacao['numseq'];
+	$_SESSION['vlrprm'] = $stspla;
+	$_SESSION['numseq'] = $numseq;
 }
 
 

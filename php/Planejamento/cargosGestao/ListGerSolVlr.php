@@ -45,23 +45,34 @@ $String = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 103),4
                 INNER JOIN tPROStptr tptr ON abpl.tiptrp = tptr.tiptrp
 				INNER JOIN tPROSstts stts ON abpl.stspla = stts.numsts
 				INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
-                INNER JOIN tPROSprtrge prtr ON prtr.tiptrp = abpl.tiptrp ";
+				INNER JOIN tPROSprtrge prtr ON prtr.tiptrp = abpl.tiptrp 
+
+	Where 	func.codcar = 7800 And func.numloc = $codreg ";
+
+if(($mat == "" || $mat == null) && ($sts == "" || $sts == null)){
+
+	$queryString = " And abpl.stspla = 2";
+}	
 
 if($mat != "" || $mat != null){
 
-	$queryString = " Where abpl.matfun = $mat And func.codcar = 7800 And func.numloc = $codreg";
-	
-	if($sts != "" || $sts != null){
-
-		$situacao = " And abpl.stspla = $sts" ;
-	}
-	
-}else{
-
-    $queryString = " Where abpl.stspla = 2 And func.codcar = 7800 And func.numloc = $codreg";
+	$queryString = " And abpl.matfun = $mat ";	
 }
 
-$result = $String.$queryString.$situacao;
+if($sts != "" || $sts != null){
+
+	$situacao = " And abpl.stspla = $sts" ;
+}
+
+if($mes != ""){
+	$mes = "And DATEPART(MONTH,abpl.datpla) = $mes";
+}
+
+if($ano != ""){
+	$ano = "And DATEPART(MONTH,abpl.datpla) = $ano";
+}
+
+$result = $String.$queryString.$situacao.$mes.$ano;
 
 //var_dump($result);
 

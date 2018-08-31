@@ -9,7 +9,7 @@ $nomAprovador = $_SESSION['colaborador'];
 $data = $_POST['data'];
 $selec = json_decode($data);
 
-$acao = "validado";
+$acao = "reaberto";
 
 if($data != "" || $data != null) {
 
@@ -28,13 +28,12 @@ if($data != "" || $data != null) {
         $nomSolicitante = $arrayInfCol['nomfun'];
         $email = $arrayInfCol['emacom'];
 
-        $strUpdate = "Update tPROSabpl Set stspla = 3 Where numseq = $numseq";
+        $strUpdate = "Update tPROSabpl Set stspla = 0 Where numseq = $numseq";
         $strUpdateQuery = mssql_query($strUpdate);
 
         echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
 
     }
-
 }
 
 if($strUpdateQuery){

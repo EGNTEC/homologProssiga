@@ -141,7 +141,16 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('idAdm').hide();
                     Ext.getCmp('btnPreGer').hide();
                     Ext.getCmp('idGerSolVlr').hide();
-                                        
+                
+                  if(stspla == 0){  
+                    Ext.Msg.show({
+                        title:'Mensagem',
+                        msg: 'Sua solicitação foi recusada pelo Gerente de Operações. Por gentileza regularizar.',
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.ERROR,
+                        closable: false
+                     });
+                  }                     
                 }
 
                 if(codcargo == 6500){
@@ -152,7 +161,17 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('btnNReali').hide();
                     Ext.getCmp('btnPlan').hide();
                     Ext.getCmp('sitsubord').hide();
-                    Ext.getCmp('idAdm').hide();                    
+                    Ext.getCmp('idAdm').hide();
+                    
+                   if(stspla == 0){ 
+                    Ext.Msg.show({
+                        title:'Mensagem',
+                        msg: 'Sua solicitação foi recusada pelo Gerente Geral de Operações.',
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.ERROR,
+                        closable: false
+                     });
+                   } 
                 }
 
             } else

@@ -179,7 +179,7 @@ foreach ($selec as $key) {
 
  $queryString = $String.$condicao_check.$condicao.$ref.$queryPrograma;
 
-var_dump($queryString);
+//var_dump($queryString);
 $query = mssql_query($queryString) or die('Erro ao filtrar planejamentos');
 
 //Tratamento para montar o arquivo.
