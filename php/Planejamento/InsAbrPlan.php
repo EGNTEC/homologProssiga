@@ -3,6 +3,7 @@ session_start();
 ob_start();
 require("../session.php");
 include('../conn.php');
+include("../Funcoes/enviarEmail.php");
 
 //variaveis de sistema
 $dia = 01;
@@ -10,7 +11,9 @@ $dia = 01;
 $niv = $_SESSION['codniv'];
 $matcad = $_SESSION['matricula'];
 $codcargo = $_SESSION['codcargo'];
+$nome = $_SESSION['colaborador'];
 $datcad = date('Y-m-d H:m:s');
+$acao = 'aguardando validação';
 
 //variaveis de formulario
 $referencia = $_POST['refplandt'];
@@ -98,7 +101,7 @@ $queryRetorno = mssql_query($strReturn);
 $arrayRetorno = mssql_fetch_array($queryRetorno);
 $numseq = $arrayRetorno['numseq'];
 
-$exec = "Exec dbo.Pr_CadastrarPlanejamento $numseq,'$montRef',$mat";
+$exec = "Exec Pr_CadastrarPlanejamento $numseq,'$montRef',$mat";
 //var_dump($exec);
 $gerPlan = mssql_query($exec);
 
@@ -123,16 +126,19 @@ $queryUpdtData = mssql_query($strUpdtData);
  $strQuery = mssql_query($str);
 
  $var = 0;
+
+ if($codcargo == 6500){
+  echo enviarEmail('grupogerenciageraloperacoes@inec.org.br',$mat,$nome,000,'Gerência Geral',$acao);
+}
+
 }else{
 
  $var = 1 ;
-
 }
-
 #=========================================================================================================
  if($var==0){
 
-    echo "{success:1}"; //sucesso
+    echo "{success:1}"; //sucesso grupogerenciageraloperacoes@inec.org.br        
     #var_dump($query);
  }else{
     #var_dump($query);

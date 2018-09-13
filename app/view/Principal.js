@@ -36,7 +36,28 @@ Ext.create('Ext.container.Viewport', {
 
                 }
             });
+            if (niv == 6) {
 
+                Ext.getCmp('idSolValr').hide();
+                Ext.getCmp('idGerSolVlr').show();
+                Ext.getCmp('sitsubord').hide();
+                Ext.getCmp('btncadplan').hide();
+                Ext.getCmp('btnNReali').hide();
+                Ext.getCmp('btnPlan').hide();
+                Ext.getCmp('idAdm').hide();
+                Ext.getCmp('histsaldo').hide();
+                Ext.getCmp('sit').hide();
+
+                if(resultado != '0'){ 
+                    Ext.Msg.show({
+                        title:'Mensagem',
+                        msg: 'Existem solicitações pendentes de validação.',
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.Msg.ERROR,
+                        closable: false
+                     });
+                }
+            }else
             if (niv == 4) {
 
                 //planejamento
@@ -140,9 +161,9 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('sitsubord').hide();
                     Ext.getCmp('idAdm').hide();
                     Ext.getCmp('btnPreGer').hide();
-                    Ext.getCmp('idGerSolVlr').hide();
+                    Ext.getCmp('idGerSolVlr').hide();                    
                 
-                  if(stspla == 0){  
+                  if(stspla === '0'){  
                     Ext.Msg.show({
                         title:'Mensagem',
                         msg: 'Sua solicitação foi recusada pelo Gerente de Operações. Por gentileza regularizar.',
@@ -163,10 +184,10 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('sitsubord').hide();
                     Ext.getCmp('idAdm').hide();
                     
-                   if(stspla == 0){ 
+                   if(stspla === '0'){ 
                     Ext.Msg.show({
                         title:'Mensagem',
-                        msg: 'Sua solicitação foi recusada pelo Gerente Geral de Operações.',
+                        msg: 'Sua solicitação foi recusada pelo Gerente Geral de Operações.Por gentileza regularizar.',
                         buttons: Ext.Msg.OK,
                         icon: Ext.Msg.ERROR,
                         closable: false

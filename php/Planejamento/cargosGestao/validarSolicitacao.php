@@ -26,7 +26,7 @@ if($data != "" || $data != null) {
         $queryInfCol = mssql_query($strInfCol);
         $arrayInfCol = mssql_fetch_array($queryInfCol);
         $nomSolicitante = $arrayInfCol['nomfun'];
-        $email = $arrayInfCol['emacom'];
+        $email = $arrayInfCol['emacom'];//Para quem enviar
 
         $strUpdate = "Update tPROSabpl Set stspla = 3 Where numseq = $numseq";
         $strUpdateQuery = mssql_query($strUpdate);

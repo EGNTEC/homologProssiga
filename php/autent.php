@@ -46,11 +46,8 @@ $row =  mssql_num_rows($query);
 $dados = mssql_fetch_array($query);
 
 //Pegar valor de saldo do colaborador logado
-//$stringSaldo = mssql_query("SELECT sum(vlrpre) - (select sum(vlrpla) from tPROSabpl where matfun=$username) AS saldo
-//FROM tPROSabpr WHERE matfun=$username");
-
- #$stringSaldo = mssql_query("Select dbo.fn_calcular_saldo ($username) as saldo");
- $prSldo = mssql_query("Exec dbo.pr_calcular_saldo $username");
+ 
+$prSldo = mssql_query("Exec dbo.pr_calcular_saldo $username");
  $stringSaldo = mssql_query("select dbo.fn_buscar_saldo ($username) as saldo");
  $arraySaldo  = mssql_fetch_array($stringSaldo);
 
@@ -92,7 +89,6 @@ $_SESSION['descsit'] 		= $sit;
 //tratamento local adicional
 
  if($numloc != ""){
-
    $_SESSION['codund'] = $numloc;
    $_SESSION['nomund'] = $nomloc;   
 
@@ -114,7 +110,29 @@ $_SESSION['descsit'] 		= $sit;
 	$_SESSION['programa']		= $programa; 
 	$_SESSION['descprograma']	= $descprograma;
 
- }else{
+ }else
+    if($dados['codniv'] == 6) {
+
+		$descprograma = 'Crediamigo/Agroamigo';
+		$_SESSION['descprograma'] = $descprograma;
+
+		//Tratamento para verificar se existem planejamentos
+		//pendentes de validação para gerentes de operações.
+
+		$strPendValid = "SELECT Count(*) As result
+						 From tPROSabpl abpl Inner Join
+							tVTRHfunc func On func.numcad = abpl.matfun	
+						Where
+						func.codcar = 6500
+						And abpl.stspla = 2 ";
+		
+		$queryPendValid = mssql_query($strPendValid);
+		$arrayPendValid = mssql_fetch_array($queryPendValid); 		
+		$resultado = $arrayPendValid['result'];
+
+		$_SESSION['resultado'] = $resultado; 
+} 
+ else{
 
 	if($dados['codprg'] == 4002){
 
@@ -124,7 +142,7 @@ $_SESSION['descsit'] 		= $sit;
 	}
 
 	$_SESSION['descprograma']	= $descprograma; 	
- }
+}
 
 //Resgatar valor teto dos cargos de gestão
 if($dados['codcar'] == 7800){ //coordenador Regional
@@ -135,12 +153,12 @@ if($dados['codcar'] == 7800){ //coordenador Regional
 	$matricula = $dados['numcad'];
 
 	//Resgatar situação do planejamento
-	$strSituacao = "Select Max(datpla),stspla,numseq From tPROSabpl Where matfun = $matricula Group By datpla,stspla";
+	$strSituacao = "Select Max(datpla),stspla,numseq From tPROSabpl Where matfun = $matricula Group By datpla,stspla,numseq";
 	$querySituacao = mssql_query($strSituacao);
 	$arrySituacao  = mssql_fetch_array($querySituacao);
 	$stspla = $arrySituacao['stspla'];
 	$numseq = $arrySituacao['numseq'];
-	$_SESSION['vlrprm'] = $stspla;  
+	$_SESSION['stspla'] = $stspla;  
 	$_SESSION['numseq'] = $numseq;
 
 }
@@ -152,16 +170,14 @@ if($dados['codcar'] == 6500){ //Gerente de Operações
 	$matricula = $dados['numcad'];
 
 	//Resgatar situação do planejamento
-	$strSituacao = "Select Max(datpla),stspla,numseq From tPROSabpl Where matfun = $matricula Group By datpla,stspla";
+	$strSituacao = "Select Max(datpla),stspla,numseq From tPROSabpl Where matfun = $matricula Group By datpla,stspla,numseq";
 	$querySituacao = mssql_query($strSituacao);
 	$arrySituacao  = mssql_fetch_array($querySituacao);
 	$stspla = $arrySituacao['stspla'];
 	$numseq = $arrySituacao['numseq'];
-	$_SESSION['vlrprm'] = $stspla;
+	$_SESSION['stspla'] = $stspla;
 	$_SESSION['numseq'] = $numseq;
 }
-
-
 
 #variaveis para limite de tempo
 $_SESSION['limite'] = 3000; //equivale a 5 min 300 || 1800 = 30min || 3600 = 60min || 3000=50min

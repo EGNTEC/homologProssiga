@@ -8,8 +8,8 @@ function enviarEmail($email,$solicitante,$nomSolicitante,$aprovador,$nomAprovado
     $dtHoje = date('d/m/Y');
     $emacom = $_SESSION['emacom'];
         
-    $assunto = "Prossiga - Valor Solicitado ".$acao;
-    $body = "Prezado(a), colaborador(a) seu planejamento encontra-se "."$acao"."."."\r\n"."\r\n"."Data: ".$dtHoje.";"."\r\n"."Contato: ".$emacom.";"."\r\n"."C.R: ".$nomSolicitante." - ".$solicitante.";"."\r\n"."G.O: ".$aprovador." - ".$nomAprovador.";"."\r\n";
+    $assunto = "Prossiga - Valor solicitado ".$acao;
+    $body = "Prezado(a), colaborador(a) o status do planejamento encontra-se "."$acao"."."."\r\n"."\r\n"."Data: ".$dtHoje.";"."\r\n"."Contato: ".$emacom.";"."\r\n"."Solicitante: ".$nomSolicitante." - ".$solicitante.";"."\r\n"."Validador: ".$aprovador." - ".$nomAprovador.";"."\r\n";
 
     $mail = new PHPMailer();
     $mail->CharSet = 'UTF-8';

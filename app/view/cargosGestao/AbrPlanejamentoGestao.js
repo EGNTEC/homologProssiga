@@ -138,7 +138,6 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                 }
             ]
         }
-
     ],
     dockedItems: [{
         xtype: 'toolbar',
@@ -154,48 +153,64 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                     var comboUnid = Ext.getCmp('uniCombo').getValue();
                     var comboReg = Ext.getCmp('regCombo').getValue();
 
-                    FormAbrPlan.getForm().submit({
-                        method: 'post',
-                        url: '/teste2/php/Planejamento/InsAbrPlan.php',
-                        params: {
-                            mat: vMatcol.getValue(),
-                            unid: comboUnid,
-                            reg: comboReg
-                        },
-                        success: function() {
-                            
-                         if(codcargo == 7800){
-
-                            var pGrid = Ext.getCmp('gridCadCoord');
-                            var aStore = pGrid.getStore();
-                            aStore.load({
-                                params: {
-                                    mat: vMatcol.getValue(),
-                                    unid: comboUnid,
-                                    reg: comboReg
-                                 }
-                            });
-                          }
-
-                          if(codcargo == 6500){
-
-                            var pGrid = Ext.getCmp('gridCadGer');
-                            var aStore = pGrid.getStore();
-                            aStore.load({
-                                params: {
-                                    mat: vMatcol.getValue(),
-                                    unid: comboUnid,
-                                    reg: comboReg
-                                 }
-                            });
-                          }
-                         
-                         Ext.Msg.alert('Mensagem', 'Solicitação Realizada Com Sucesso.'); 
-                         Ext.getCmp('JanAbrPlanGest').destroy();
-
-                        },
-                        failure: function() { Ext.Msg.alert('Mensagem', 'Não foi possível realizar a solicitação.'); }
-                    });
+                    Ext.MessageBox.show({
+                        msg : 'Salvando dados de solicitação...',
+                        progressText : 'Inserindo...',
+                        width : 300,
+                        wait : true,
+                        waitConfig : 
+                        {
+                            duration : 20000,
+                            increment : 15,
+                            text : 'Inserindo...',
+                            scope : this,
+                            fn : function() {
+                                //Ext.MessageBox.hide();
+                                FormAbrPlan.getForm().submit({
+                                    method: 'post',
+                                    url: '/teste2/php/Planejamento/InsAbrPlan.php',
+                                    params: {
+                                        mat: vMatcol.getValue(),
+                                        unid: comboUnid,
+                                        reg: comboReg
+                                    },
+                                    success: function() {
+                                        
+                                     if(codcargo == 7800){
+            
+                                        var pGrid = Ext.getCmp('gridCadCoord');
+                                        var aStore = pGrid.getStore();
+                                        aStore.load({
+                                            params: {
+                                                mat: vMatcol.getValue(),
+                                                unid: comboUnid,
+                                                reg: comboReg
+                                             }
+                                        });
+                                      }
+            
+                                      if(codcargo == 6500){
+            
+                                        var pGrid = Ext.getCmp('gridCadGer');
+                                        var aStore = pGrid.getStore();
+                                        aStore.load({
+                                            params: {
+                                                mat: vMatcol.getValue(),
+                                                unid: comboUnid,
+                                                reg: comboReg
+                                             }
+                                        });
+                                      }            
+                                     Ext.MessageBox.hide();
+                                     Ext.Msg.alert('Mensagem', 'Solicitação Realizada Com Sucesso.'); 
+                                     Ext.getCmp('JanAbrPlanGest').destroy();
+            
+                                    },
+                                    failure: function() { Ext.Msg.alert('Mensagem', 'Não foi possível realizar a solicitação.'); }
+                                });
+                            }
+                        }
+                     });                    
                 }
             }
         ]

@@ -15,13 +15,14 @@ $codreg   = $_SESSION['codreg'];
 $codcargo = $_SESSION['codcargo'];
 $codprg   = $_SESSION['usu_codprg'];
 $vlrparm  = $_SESSION['vlrprm'];
-$stspla   = $_SESSION['vlrprm'];
+$stspla   = $_SESSION['stspla'];
 $numseq   = $_SESSION['numseq'];
 #=============================================
 $reg   = $_SESSION['nomreg'];
 $unid  = $_SESSION['nomund'];
 $email = $_SESSION['emacom'];
 $sald  = $_SESSION['saldo'];
+$resultado = $_SESSION['resultado']; 
 
 $programa     = $_SESSION['programa'];
 $descprograma = $_SESSION['descprograma'];
@@ -151,6 +152,7 @@ $competencia = $competencia.'/'.$ano;
    var vlrparm ="<?php echo $vlrparm ;?>";
    var stspla  ="<?php echo $stspla ;?>";
    var numseq  ="<?php echo $numseq ;?>";
+   var resultado  ="<?php echo $resultado ;?>";
 
 </script>
 

@@ -8,7 +8,7 @@ $mat =   $_SESSION['matricula'];
 
 $Sldo="SELECT top 6 matfun,datref,vlrpla,vlrrec,vlrpre,vlrsld 
         FROM tprossldo 
-       WHERE matfun=$mat ORDER BY datpla DESC";
+       WHERE matfun=$mat And datpla > '03-01-2018' ORDER BY datpla DESC";
 
 $query = mssql_query($Sldo);
    

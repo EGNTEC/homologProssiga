@@ -9,6 +9,7 @@ $col     = $_SESSION['matricula'];
 $codreg  = $_SESSION['codreg'];
 $codund  = $_SESSION['codund'];
 $programa= $_SESSION['programa'];
+$codcargo = $_SESSION['codcargo'];
 
 $mat    = $_GET['mat'];
 $und    = $_GET['unid'];
@@ -17,46 +18,57 @@ $sts    = $_GET['sts'];
 $mes    = $_GET['mes'];
 $ano    = $_GET['ano'];
 
+//Tratamento para o tipo de cargo
+
+if($niv == 6){
+	$cargo = 6500;
+}else
+if($niv == 2){
+	$cargo = 7800;
+}
 
 $String = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 103),4,7) AS datpla,
-			func.nomloc AS nomloc,
-			func.numcad AS numcad,
-			func.nomfun AS nomfun,
-			func.titred AS cargo,
-			abpl.qtdcli AS qtdcli,
-			abpl.qtdkm  AS qtdkm,
-			abpl.vlrpla AS vlrpla,
-			tptr.destrp AS destrp,
-			abpl.stspla AS stspla,
-			stts.dessts AS dessts,
-			abpl.numseq AS numseq,
-			abpl.tiptrp AS tiptrp,
-	   (select vlrtrp from tPROSprtrge prtr
-			where prtr.tiptrp = abpl.tiptrp
-			and   prtr.parm =7800
-			and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
-									where prtr2.tiptrp = prtr.tiptrp
-									and   prtr2.numprg = prtr.numprg 
-									and	  prtr2.datvig <= abpl.datpla)) as vlrtrp,
-		Convert (Varchar(10),abpl.datpla, 103) AS data
+func.nomloc AS nomloc,
+func.numcad AS numcad,
+func.nomfun AS nomfun,
+func.titred AS cargo,
+abpl.qtdcli AS qtdcli,
+abpl.qtdkm  AS qtdkm,
+abpl.vlrpla AS vlrpla,
+tptr.destrp AS destrp,
+abpl.stspla AS stspla,
+stts.dessts AS dessts,
+abpl.numseq AS numseq,
+abpl.tiptrp AS tiptrp,
+(select vlrtrp from tPROSprtrge prtr
+where prtr.parm =$cargo
+and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
+						where prtr2.numprg = prtr.numprg 
+						and	  prtr2.datvig <= abpl.datpla)) as vlrtrp,
+Convert (Varchar(10),abpl.datpla, 103) AS data
 
-	FROM tPROSabpl abpl
+FROM tPROSabpl abpl
 
-                INNER JOIN tPROStptr tptr ON abpl.tiptrp = tptr.tiptrp
-				INNER JOIN tPROSstts stts ON abpl.stspla = stts.numsts
-				INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
-				INNER JOIN tPROSprtrge prtr ON prtr.tiptrp = abpl.tiptrp 
+	INNER JOIN tPROStptr tptr ON abpl.tiptrp = tptr.tiptrp
+	INNER JOIN tPROSstts stts ON abpl.stspla = stts.numsts
+	INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
+	INNER JOIN tPROSprtrge prtr ON prtr.parm = func.codcar 
 
-	Where 	func.codcar = 7800 And func.numloc = $codreg ";
+Where 	func.codcar = $cargo And abpl.datpla > '03-01-2018'"; 
+
+if ($niv != 6) {
+
+	$String = $String." And func.numloc = $codreg ";
+}
 
 if(($mat == "" || $mat == null) && ($sts == "" || $sts == null)){
 
-	$queryString = " And abpl.stspla = 2";
+	$String = $String." And abpl.stspla = 2";
 }	
 
 if($mat != "" || $mat != null){
 
-	$queryString = " And abpl.matfun = $mat ";	
+	$String = $String." And abpl.matfun = $mat ";	
 }
 
 if($sts != "" || $sts != null){
@@ -72,7 +84,7 @@ if($ano != ""){
 	$ano = "And DATEPART(MONTH,abpl.datpla) = $ano";
 }
 
-$result = $String.$queryString.$situacao.$mes.$ano;
+$result = $String.$situacao.$mes.$ano;
 
 //var_dump($result);
 

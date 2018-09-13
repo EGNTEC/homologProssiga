@@ -85,7 +85,7 @@ if($niv==3){
 }
 
 
-//var_dump($queryString);
+var_dump($queryString);
 $query = mssql_query($queryString);
    
 //faz um looping e cria um array com os campos da consulta

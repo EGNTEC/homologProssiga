@@ -251,11 +251,11 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
         listeners: {
 
             itemClick: function(grid, record, item, index, e, eOpts) {
-               var grid = Ext.getCmp('gridGerSolVlr');
-               var selectedRecords = grid.getSelectionModel().getSelection();
+               var gridCadCoord = Ext.getCmp('gridCadCoord');
+               var selectedRecords = gridCadCoord.getSelectionModel().getSelection();
                stspla = selectedRecords[0].get("stspla");
 
-               if(stspla == 0){
+               if(stspla === 0){
 
                   Ext.create('desloc.view.cargosGestao.AbrPlanejamentoGestaoEdt');
                }   
@@ -347,10 +347,14 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
       listeners: {
 
         itemClick: function(grid, record, item, index, e, eOpts) {
-           var grid = Ext.getCmp('gridGerSolVlr');
-           var selectedRecords = grid.getSelectionModel().getSelection();
+           var gridCadGer = Ext.getCmp('gridCadGer');
+           var selectedRecords = gridCadGer.getSelectionModel().getSelection();
            stspla = selectedRecords[0].get("stspla");
 
+           if(stspla === 0){
+
+             Ext.create('desloc.view.cargosGestao.AbrPlanejamentoGestaoEdt');
+           }
          }
       }
 
@@ -427,7 +431,7 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
                             mes: comboMes,
                             ano: comboAno
                         }
-                      });
+                    });
                 }
 
                 //Tratamento para Gerente de Operações

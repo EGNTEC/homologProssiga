@@ -7,12 +7,13 @@ $password   = $_POST["password"];
 
 //Select saber se o colaborador é sede
 
-$stringSede = "SELECT numcad,numloc From tVTRHfunc Where numcad = $numcad ";
+$stringSede = "SELECT numcad,numloc,codniv From tVTRHfunc Where numcad = $numcad ";
 $querySede  = mssql_query($stringSede);
 $arraySede  = mssql_fetch_array($querySede);
 
 $numloc = $arraySede['numloc'];
 $numcad = $arraySede['numcad'];
+$codniv = $arraySede['codniv'];
 
 //====================================================================================
 
@@ -57,7 +58,7 @@ $nomloc2 = $locad2['nomloc'];
 
 //=====================================================================================
 
-if($numloc == 1){
+if($numloc == 1 && $codniv != 6 ){
 
     $_SESSION['matricula'] = $arraySede['numcad'];
     $_SESSION['password']  = $password;

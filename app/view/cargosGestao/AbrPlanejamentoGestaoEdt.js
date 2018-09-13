@@ -2,7 +2,7 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestaoEdt', {
     extend: 'Ext.window.Window',
     alias: 'widget.abrplanform',
     title: 'Editar Abertura de Planejamento',
-    height: 200,
+    height: 150,
     width: 350,
     align: 'stretch',
     modal: true,
@@ -43,7 +43,7 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestaoEdt', {
                     plugins: 'textmask',
                     mask: 'R$ 9.999.990,00',
                     money: true,
-                    disabled: true,
+                    disabled: false,
                     allowBlank: false,
                     listeners: {
                         change: function(field, value) {
@@ -79,48 +79,64 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestaoEdt', {
                 text: 'Ok',
                 iconCls: 'icon-add',
                 handler: function() {
-                    var FormAbrPlan = Ext.getCmp('FormAbrPlan');
+                    var FormAbrPlan = Ext.getCmp('FormAbrPlanGestEdt');
+
+                    Ext.MessageBox.show({
+                        msg : 'Alterando dados da solicitação...',
+                        progressText : 'Alterando...',
+                        width : 300,
+                        wait : true,
+                        waitConfig : 
+                        {
+                            duration : 20000,
+                            increment : 15,
+                            text : 'Alterando...',
+                            scope : this,
+                            fn : function(){
+                                //Ext.MessageBox.hide();
+                                FormAbrPlan.getForm().submit({
+                                    method: 'post',
+                                    url: '/teste2/php/Planejamento/cargosGestao/UpdtSolVlr.php',
+                                    params: {
+                                        sitpla: stspla,
+                                        seqpla: numseq
+                                    },
+                                    success: function() {
                                         
-                    FormAbrPlan.getForm().submit({
-                        method: 'post',
-                        url: '/teste2/php/Planejamento/cargosGestao/UpdtSolVlr.php',
-                        params: {
-                            sitpla: stspla,
-                            seqpla: numseq
-                        },
-                        success: function() {
-                            
-                         if(codcargo == 7800){
-
-                            var pGrid = Ext.getCmp('gridCadCoord');
-                            var aStore = pGrid.getStore();
-                            aStore.load({
-                                params: {
-                                    mat: vMatcol.getValue(),
-                                    unid: comboUnid,
-                                    reg: comboReg
-                                 }
-                            });
-                          }
-
-                          if(codcargo == 6500){
-
-                            var pGrid = Ext.getCmp('gridCadGer');
-                            var aStore = pGrid.getStore();
-                            aStore.load({
-                                params: {
-                                    mat: vMatcol.getValue(),
-                                    unid: comboUnid,
-                                    reg: comboReg
-                                 }
-                            });
-                          }
-                         
-                         Ext.Msg.alert('Mensagem', 'Solicitação Realizada Com Sucesso.'); 
-                         Ext.getCmp('JanAbrPlanGestEdt').destroy();
-
-                        },
-                        failure: function() { Ext.Msg.alert('Mensagem', 'Não foi possível realizar a solicitação.'); }
+                                     if(codcargo == 7800){
+            
+                                        var pGrid = Ext.getCmp('gridCadCoord');
+                                        var aStore = pGrid.getStore();
+                                        aStore.load({
+                                            params: {
+                                                //mat: vMatcol.getValue(),
+                                                //unid: comboUnid,
+                                                //reg: comboReg
+                                             }
+                                        });
+                                      }
+            
+                                      if(codcargo == 6500){
+            
+                                        var pGrid = Ext.getCmp('gridCadGer');
+                                        var aStore = pGrid.getStore();
+                                        aStore.load({
+                                            params: {
+                                                //mat: vMatcol.getValue(),
+                                                //unid: comboUnid,
+                                                //reg: comboReg
+                                             }
+                                        });
+                                      }
+                                     Ext.MessageBox.hide();
+                                     Ext.Msg.alert('Mensagem', 'Alteração Realizada Com Sucesso.'); 
+                                     Ext.getCmp('JanAbrPlanGestEdt').destroy();
+            
+                                    },
+                                    failure: function() { Ext.Msg.alert('Mensagem', 'Não foi possível realizar a alteração.'); }
+                                });
+                            }
+                        }
                     });
                 }
             }
