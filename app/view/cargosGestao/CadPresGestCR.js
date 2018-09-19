@@ -114,7 +114,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
 
                         click: function() {
                             Ext.getCmp('btn_encplanCR').setDisabled(false);
-                            //Ext.getCmp('btnnov').setDisabled(false);
+                            Ext.getCmp('btnnovCR').setDisabled(false);
                             var lGrid = Ext.getCmp('gridpreGestCR');
                             var selectedRecords = lGrid.getSelectionModel().getSelection();
                             var vTiptrp = selectedRecords[0].get("tiptrp");
@@ -126,58 +126,73 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             var selectedRecords = xGrid.getSelectionModel().getSelection();
                             var vMesRef = selectedRecords[0].get("mesref");
 
-
                             parms = [];
                             var updatedRecords = xGrid.getStore().getUpdatedRecords();
                             Ext.each(updatedRecords, function(record) {
                                 parms.push(record.data);
                             });
-                            if (parms.length > 0) {
-                                Ext.Ajax.request({
-                                    url: '/teste2/php/Prestacao/updateCadPre.php',
-                                    params: {
-                                        action: 'post',
-                                        records: Ext.encode(parms)
-                                    },
-                                    success: function(response, opts) {
-                                        var result = Ext.JSON.decode(response.responseText);
-                                        //console.log(result);
-                                        if (result == 0) {
 
-                                            Ext.Msg.alert('Mensagem', 'Prestação de contas salva com sucesso.', function(btn, text) {
-
-                                                if (btn == "ok") {
-
+                            Ext.MessageBox.show({
+                                msg : 'Salvando dados da prestação...',
+                                progressText : 'Salvando dados...',
+                                width : 300,
+                                wait : true,
+                                waitConfig : 
+                                {
+                                    duration : 20000,
+                                    increment : 15,
+                                    text : 'Salvando dados...',
+                                    scope : this,
+                                    fn : function() {
+                                        
+                                        if (parms.length > 0) {
+                                            Ext.Ajax.request({
+                                                url: '/teste2/php/Prestacao/updateCadPre.php',
+                                                params: {
+                                                    action: 'post',
+                                                    records: Ext.encode(parms)
+                                                },
+                                                success: function(response, opts) {
+                                                    var result = Ext.JSON.decode(response.responseText);
+                                                    //console.log(result);
+                                                    if (result == 0) {
+            
+                                                        Ext.Msg.alert('Mensagem', 'Prestação de contas salva com sucesso.', function(btn, text) {
+            
+                                                            if (btn == "ok") {
+                                                                gStore.load();
+                                                            }
+                                                        });
+                                                    } else
+                                                    if (result == 1) {
+            
+                                                        Ext.getCmp('btn_encplanCR').setDisabled(true);
+                                                        Ext.getCmp('btnnovCR').setDisabled(true);
+                                                        Ext.Msg.alert('Mensagem', 'Existe(m) dia(s) preenchido(s) incorretamente.');
+                                                    } else
+                                                    if (result == 2) {
+            
+                                                        Ext.getCmp('btn_encplanCR').setDisabled(true);
+                                                        Ext.getCmp('btnnovCR').setDisabled(true);
+                                                        Ext.Msg.alert('Mensagem', 'Existe dia com valor negativo.');
+                                                    } else {
+                                                        Ext.getCmp('btn_encplanCR').setDisabled(true);
+                                                        Ext.getCmp('btnnovCR').setDisabled(true);
+                                                        Ext.Msg.alert('Mensagem', 'Erro ao atualizar registros.');
+                                                        gStore.load();
+                                                    }
+                                                },
+                                                failure: function() {
+            
                                                     gStore.load();
-
                                                 }
+            
                                             });
-                                        } else
-                                        if (result == 1) {
-
-                                            Ext.getCmp('btn_encplanCR').setDisabled(true);
-                                            //Ext.getCmp('btnnov').setDisabled(true);
-                                            Ext.Msg.alert('Mensagem', 'Existe(m) dia(s) preenchido(s) incorretamente.');
-                                        } else
-                                        if (result == 2) {
-
-                                            Ext.getCmp('btn_encplanCR').setDisabled(true);
-                                            //Ext.getCmp('btnnov').setDisabled(true);
-                                            Ext.Msg.alert('Mensagem', 'Existe dia com valor negativo.');
-                                        } else {
-                                            Ext.getCmp('btn_encplanCR').setDisabled(true);
-                                            //Ext.getCmp('btnnov').setDisabled(true);
-                                            Ext.Msg.alert('Mensagem', 'Erro ao atualizar registros.');
-                                            gStore.load();
                                         }
-                                    },
-                                    failure: function() {
-
-                                        gStore.load();
                                     }
+                                }
+                             });
 
-                                });
-                            }
                             //========================================================
                             //Insert ao salvar
                             Ext.apply(gStore.getProxy().extraParams, {
@@ -237,126 +252,142 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             var vlrpre = selectedRecords[0].get("vlrpre");
                             var jusprest = selectedRecords[0].get("juspre");
 
-                            Ext.Ajax.request({
-                                url: '/teste2/php/Prestacao/updBtnEnc.php',
-                                params: {
-                                    action: 'post',
-                                    tiptrp: tiptrp,
-                                    id: vIdAbrt
-                                        //vlrpre:vlrpre
-                                },
-                                success: function(response) {
-                                    var result = Ext.JSON.decode(response.responseText);
-                                    //console.log(result);
-                                    if (result == 0) {
+                            Ext.MessageBox.show({
+                                msg : 'Finalizando..',
+                                progressText : 'Finalizando prestação...',
+                                width : 300,
+                                wait : true,
+                                waitConfig : 
+                                {
+                                    duration : 20000,
+                                    increment : 15,
+                                    text : 'Finalizando prestação...',
+                                    scope : this,
+                                    fn : function() {
 
-                                        Ext.Msg.alert('Mensagem', 'Existem dias com valor total zerado.', function(btn, text) {
-
-                                            if (btn == "ok") {
-
-                                                Ext.getCmp('btn_encplanCR').setDisabled(false);
-                                            }
-                                        });
-
-                                    } else
-                                    if (result == 1) {
-
-                                        Ext.Msg.alert('Mensagem', 'O valor total da prestação de contas é superior ao limite permitido. Justifique!', function(btn, text) {
-
-                                            if (btn == "ok") {
-                                                Ext.create('desloc.view.JustificativaTeto');
-                                            }
-                                        });
-                                        Ext.getCmp('btn_encplanCR').setDisabled(true);
-
-                                    } else
-                                    if (result == 2) {
-                                        Ext.Msg.alert('Mensagem', 'Prestação de contas finalizada com sucesso.');
-                                        Ext.getCmp('btn_encplanCR').setDisabled(true);
-                                        //Ext.getCmp('gridprNov').setDisabled(true);
-                                        sStore.load({
+                                        Ext.Ajax.request({
+                                            url: '/teste2/php/Prestacao/updBtnEnc.php',
                                             params: {
-                                                sts: comboSts.getValue(),
-                                                mat: Ext.getCmp('usuCombo').getValue(),
-                                                btn: 0
-                                            }
-                                        });
-                                        Ext.getCmp('cadpresgestcr').destroy(true);
-
-                                    } else
-                                    if (result == 3) {
-
-                                        var confBox = Ext.MessageBox;
-
-                                        confBox.buttonText = {
-                                            cancel: 'cancelText',
-                                            no: 'Não',
-                                            ok: 'Ok',
-                                            yes: 'Sim'
-                                        };
-
-                                        Ext.Msg.show({
-                                            title: 'Mensagem',
-                                            msg: 'O valor total da prestação está zerado, Deseja continuar?',
-                                            buttons: Ext.MessageBox.YESNO,
-                                            closable: false,
-                                            icon: Ext.MessageBox.WARNING,
-                                            fn: function(btn, text){
-                                                if(btn == 'yes'){
-                                                    Ext.Ajax.request({
-
-                                                        url: '/teste2/php/Prestacao/EncPrest.php',
-                                                        params: {
-                                                            action: 'post',
-                                                            id: vIdAbrt
-                                                        },
-                                                        success: function(response) {
-                                                            var result = Ext.JSON.decode(response.responseText);
-
-                                                            if(result == 0){
-
-                                                                Ext.Msg.alert('Mensagem', 'Prestação de contas finalizada com sucesso.');
-                                                            }else{
-                                                                Ext.Msg.alert('Mensagem', 'Erro ao cadastrar a prestação.');
-
-                                                            }
+                                                action: 'post',
+                                                tiptrp: tiptrp,
+                                                id: vIdAbrt
+                                                    //vlrpre:vlrpre
+                                            },
+                                            success: function(response) {
+                                                var result = Ext.JSON.decode(response.responseText);
+                                                //console.log(result);
+                                                if (result == 0) {
+            
+                                                    Ext.Msg.alert('Mensagem', 'Existem dias com valor total zerado.', function(btn, text) {
+            
+                                                        if (btn == "ok") {
+            
+                                                            Ext.getCmp('btn_encplanCR').setDisabled(false);
                                                         }
                                                     });
+            
+                                                } else
+                                                if (result == 1) {
+            
+                                                    Ext.Msg.alert('Mensagem', 'O valor total da prestação de contas é superior ao limite permitido. Justifique!', function(btn, text) {
+            
+                                                        if (btn == "ok") {
+                                                            Ext.create('desloc.view.JustificativaTeto');
+                                                        }
+                                                    });
+                                                    Ext.getCmp('btn_encplanCR').setDisabled(true);
+            
+                                                } else
+                                                if (result == 2) {
+                                                    Ext.Msg.alert('Mensagem', 'Prestação de contas finalizada com sucesso.');
+                                                    Ext.getCmp('btn_encplanCR').setDisabled(true);
+                                                    
+                                                    sStore.load({
+                                                        params: {
+                                                            sts: comboSts.getValue(),
+                                                            mat: Ext.getCmp('usuCombo').getValue(),
+                                                            btn: 0
+                                                        }
+                                                    });
+                                                    Ext.getCmp('cadpresgestcr').destroy(true);
+            
+                                                } else
+                                                if (result == 3) {
+            
+                                                    var confBox = Ext.MessageBox;
+            
+                                                    confBox.buttonText = {
+                                                        cancel: 'cancelText',
+                                                        no: 'Não',
+                                                        ok: 'Ok',
+                                                        yes: 'Sim'
+                                                    };
+            
+                                                    Ext.Msg.show({
+                                                        title: 'Mensagem',
+                                                        msg: 'O valor total da prestação está zerado, Deseja continuar?',
+                                                        buttons: Ext.MessageBox.YESNO,
+                                                        closable: false,
+                                                        icon: Ext.MessageBox.WARNING,
+                                                        fn: function(btn, text){
+                                                            if(btn == 'yes'){
+                                                                Ext.Ajax.request({
+            
+                                                                    url: '/teste2/php/Prestacao/EncPrest.php',
+                                                                    params: {
+                                                                        action: 'post',
+                                                                        id: vIdAbrt
+                                                                    },
+                                                                    success: function(response) {
+                                                                        var result = Ext.JSON.decode(response.responseText);
+            
+                                                                        if(result == 0){
+            
+                                                                            Ext.Msg.alert('Mensagem', 'Prestação de contas finalizada com sucesso.');
+                                                                        }else{
+                                                                            Ext.Msg.alert('Mensagem', 'Erro ao cadastrar a prestação.');
+            
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }else
+                                                             if(btn=='no'){}
+                                                         }
+                                                    });
+                                                    
+                                                    Ext.getCmp('btn_encplanCR').setDisabled(true);
                                                 }else
-                                                 if(btn=='no'){}
-                                             }
-                                        });
-                                        
-                                        Ext.getCmp('btn_encplanCR').setDisabled(true);
-                                    }else
-                                     if(result == 4){
-
-                                        Ext.Msg.alert('Mensagem', 'Algo de errado aconteceu, por gentileza tente novamente.');
+                                                 if(result == 4){
+            
+                                                    Ext.Msg.alert('Mensagem', 'Algo de errado aconteceu, por gentileza tente novamente.');
+                                                }
+                                            },
+                                            failure: function() {
+                                                Ext.Msg.alert('Mensagem', 'Problemas na base!');
+                                                sStore.load({
+                                                    params: {
+                                                        sts: comboSts.getValue()
+                                                    }
+                                                });
+                                            }
+                                        });                                        
                                     }
-                                },
-                                failure: function() {
-                                    Ext.Msg.alert('Mensagem', 'Problemas na base!');
-                                    sStore.load({
-                                        params: {
-                                            sts: comboSts.getValue()
-                                        }
-                                    });
                                 }
-                            });
+                             });                            
 
                         } //fim da função click
                 },
-                /*{
+                {
                     text: 'Deslocamento Adicional',
                     iconCls: 'icon-moedas',
                     //disabled:true,
                     tooltip: 'Cadastrar deslocamento adicional',
-                    id: 'btnnov',
+                    id: 'btnnovCR',
                     listeners: {
                         click: function() {
                             valcombo = 0;
 
-                            var xGrid = Ext.getCmp('gridprNov');
+                            var xGrid = Ext.getCmp('gridprNovGestCR');
                             var selectedRecords = xGrid.getSelectionModel().getSelection();
 
                             Tnumseq = 0;
@@ -372,7 +403,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             //var tiptra = Ext.getCmp('tiptra');
                             dt = '0/00/0000';
 
-                            var qGrid = Ext.getCmp('gridpre');
+                            var qGrid = Ext.getCmp('gridpreGestCR');
                             var selectedRecord = qGrid.getSelectionModel().getSelection();
                             var Vtiptrp = vTiptrp; //selectedRecord[0].get("tiptrp");
                             var id = vSeqpla; //selectedRecord[0].get("numseq");
@@ -383,7 +414,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
 
                         }
                     }
-                },*/
+                },
                 /*{
                     xtype: 'button',
                     text: 'Arquivo de Prestação',
@@ -788,7 +819,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                         borderColor: '#F5F5F5'
                     },
                     hoverCls: 'black'
-
                 },
                 {
                     xtype: 'numbercolumn',
@@ -1582,7 +1612,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
 
                                 }
 
-
                                 g_RowAnt = rowSelected;
                                 g_Desc = Desc;
                                 g_DescE = DescE;
@@ -1601,9 +1630,8 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
             listeners: {
                 beforeedit: function(editor, grid, opts) {
 
-                    //Ext.getCmp('btn_encplan').setDisabled(true);
-                    //Ext.getCmp('btnnov').setDisabled(true);
-
+                    Ext.getCmp('btn_encplanCR').setDisabled(true);
+                    Ext.getCmp('btnnovCR').setDisabled(true);
                 },
 
                 select: function() {
@@ -1789,10 +1817,9 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
             Ext.getCmp('resNome').setText(vNomfun);
             Ext.getCmp('resLocal').setText(vNomloc);
             Ext.getCmp('resPeriodo').setText(vDatpla);
+           
+            /*if (vStspr != 4) {
 
-            /*if (dateHoje > dateParm && vStspr != 4) {
-
-                Ext.getCmp('gridprNovGestCR').setDisabled(true);
                 btn.hide();
                 Ext.getCmp('btn_encplanCR').hide();
                 Ext.getCmp('btn_saveCR').hide();
@@ -1989,7 +2016,7 @@ Ext.onReady(function() {
                 text: 'Salvar',
                 iconCls: 'icon-save',
                 handler: function() {
-                    var grid = Ext.getCmp('gridprNov');
+                    var grid = Ext.getCmp('gridprNovGestCR');
 
                     var sStore = grid.getStore();
                     //var valcombo = Ext.getCmp('vlradd').getValue();

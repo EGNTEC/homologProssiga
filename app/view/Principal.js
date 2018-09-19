@@ -186,7 +186,7 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('btnPlan').hide();
                     Ext.getCmp('sitsubord').hide();
                     Ext.getCmp('idAdm').hide();
-                    Ext.getCmp('btnPre').hide();
+                    Ext.getCmp('btnPre').show();
                     
                    if(stspla === '0'){ 
                     Ext.Msg.show({
@@ -1086,6 +1086,20 @@ Ext.create('Ext.container.Viewport', {
                                     margin: '5 0 0 0'
                                 },
                                 handler: function() {
+
+                                        //Tratamento para chamar a grid dos cargos de gestão
+                                        if (codcargo == 6500) {
+
+                                            Ext.create('desloc.view.cargosGestao.CadPresGestGO');
+                                            var regC = Ext.getCmp('regCombo');
+                                            var uniC = Ext.getCmp('uniCombo');
+                                            var colC = Ext.getCmp('usuCombo');
+                                            var status = Ext.getCmp('statusCombo');
+                                            var mesC = Ext.getCmp('mesCombo');
+                                            var anoC = Ext.getCmp('anoCombo');
+
+                                        } else {
+
                                         Ext.create('desloc.view.PrestacaoForm');
                                         var regC = Ext.getCmp('regCombo');
                                         var uniC = Ext.getCmp('uniCombo');
@@ -1216,7 +1230,11 @@ Ext.create('Ext.container.Viewport', {
                                             regC.emptyText = "Sede";
                                             regC.applyEmptyText();
                                         }
+
+                                      }
+
                                     } //Fim do botão clique
+                                    
                             } //fim do botão
                         ]
                     },

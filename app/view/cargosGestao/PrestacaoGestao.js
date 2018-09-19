@@ -228,14 +228,17 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                           dateH = mes + '/' + dia + '/' + ano;  
                           dateHoje = new Date(dateH);
 
-                          if (dateHoje > dateParm && vStspr != 4) {
+                          if (dateHoje > dateParm) {
 
                             Ext.Msg.alert('Mensagem', 'A data limite da prestação de contas foi ultrapassada.', function(btn, text) {});   
                           }else{
-
-                             if(codcargo == 7800) {
-                                Ext.create('desloc.view.cargosGestao.CadPresGestCR'); 
-                             }  
+                             if(vStspr == 0){
+                               if(codcargo == 7800) {
+                                 Ext.create('desloc.view.cargosGestao.CadPresGestCR'); 
+                               }
+                             }else {                                   
+                                 Ext.create('desloc.view.cargosGestao.CadPresGestCRNoEdit');
+                             }                               
                           }
                        }
                     }
