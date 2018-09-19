@@ -128,35 +128,50 @@ Ext.define('desloc.view.ConsultarLote', {
                         data:Ext.encode(selected)
                     });*/
 
-                    Ext.Ajax.request({
-                        url: '/teste2/php/Planejamento/DelPag.php',
-                        params: {
-                            data: Ext.encode(selected)
-                        },
-                        success: function(response, opts) {
-                            var result = Ext.JSON.decode(response.responseText);
-
-                            if (result == 0) {
-
-                                Ext.Msg.alert('Mensagem', 'Lote deletado com sucesso.');
-                                var pGrid = Ext.getCmp('gridconlote');
-                                var pStore = pGrid.getStore();
-                                pStore.load();
-                            } else {
-                                Ext.Msg.alert('Mensagem', 'Problema ao excluir lote.');
-                                var pGrid = Ext.getCmp('gridconlote');
-                                var pStore = pGrid.getStore();
-                                pStore.load();
+                    Ext.MessageBox.show({
+                        msg : 'Apagando lote criado...',
+                        progressText : 'Apagando...',
+                        width : 300,
+                        wait : true,
+                        waitConfig : 
+                        {
+                            duration : 20000,
+                            increment : 15,
+                            text : 'Apagando...',
+                            scope : this,
+                            fn : function() {
+                                Ext.Ajax.request({
+                                    url: '/teste2/php/Planejamento/DelPag.php',
+                                    params: {
+                                        data: Ext.encode(selected)
+                                    },
+                                    success: function(response, opts) {
+                                        var result = Ext.JSON.decode(response.responseText);
+            
+                                        if (result == 0) {
+                                            Ext.MessageBox.hide();
+                                            Ext.Msg.alert('Mensagem', 'Lote deletado com sucesso.');
+                                            var pGrid = Ext.getCmp('gridconlote');
+                                            var pStore = pGrid.getStore();
+                                            pStore.load();
+                                        } else {
+                                            Ext.MessageBox.hide();
+                                            Ext.Msg.alert('Mensagem', 'Problema ao excluir lote.');
+                                            var pGrid = Ext.getCmp('gridconlote');
+                                            var pStore = pGrid.getStore();
+                                            pStore.load();
+                                        }
+            
+                                    },
+                                    failure: function() {
+                                        Ext.Msg.alert('Mensagem', 'Problemas na base!');
+                                        //console.log('Erro no retorno da informação.');
+                                    }
+            
+                                });
                             }
-
-                        },
-                        failure: function() {
-                            Ext.Msg.alert('Mensagem', 'Problemas na base!');
-                            //console.log('Erro no retorno da informação.');
                         }
-
-                    });
-
+                     });
                 }
             },
             {
@@ -180,35 +195,51 @@ Ext.define('desloc.view.ConsultarLote', {
 
                     pStore.remove(pRows);
 
-                    Ext.Ajax.request({
-                        url: '/teste2/php/Planejamento/ValLote.php',
-                        timeout: 9999999,
-                        params: {
-                            data: Ext.encode(selected)
-                        },
-                        success: function(response, opts) {
-                            var result = Ext.JSON.decode(response.responseText);
-
-                            if (result == 0) {
-                                Ext.Msg.alert('Mensagem', 'Lote validado com sucesso.');
-                                var pGrid = Ext.getCmp('gridconlote');
-                                var pStore = pGrid.getStore();
-                                pStore.load();
-                            } else {
-                                Ext.Msg.alert('Mensagem', 'Problema ao validar lote.');
-                                var pGrid = Ext.getCmp('gridconlote');
-                                var pStore = pGrid.getStore();
-                                pStore.load();
+                    Ext.MessageBox.show({
+                        msg : 'Validando dados do lote...',
+                        progressText : 'Validando...',
+                        width : 300,
+                        wait : true,
+                        waitConfig : 
+                        {
+                            duration : 20000,
+                            increment : 15,
+                            text : 'Validando...',
+                            scope : this,
+                            fn : function() {
+                                Ext.Ajax.request({
+                                    url: '/teste2/php/Planejamento/ValLote.php',
+                                    timeout: 9999999,
+                                    params: {
+                                        data: Ext.encode(selected)
+                                    },
+                                    success: function(response, opts) {
+                                        var result = Ext.JSON.decode(response.responseText);
+            
+                                        if (result == 0) {
+                                            Ext.MessageBox.hide();
+                                            Ext.Msg.alert('Mensagem', 'Lote validado com sucesso.');
+                                            var pGrid = Ext.getCmp('gridconlote');
+                                            var pStore = pGrid.getStore();
+                                            pStore.load();
+                                        } else {
+                                            Ext.MessageBox.hide();
+                                            Ext.Msg.alert('Mensagem', 'Problema ao validar lote.');
+                                            var pGrid = Ext.getCmp('gridconlote');
+                                            var pStore = pGrid.getStore();
+                                            pStore.load();
+                                        }
+            
+                                    },
+                                    failure: function() {
+                                        Ext.Msg.alert('Mensagem', 'Problemas na base!');
+                                        //console.log('Erro no retorno da informação.');
+                                    }            
+                                });                                
                             }
-
-                        },
-                        failure: function() {
-                            Ext.Msg.alert('Mensagem', 'Problemas na base!');
-                            //console.log('Erro no retorno da informação.');
                         }
-
-                    });
-                }
+                     });                    
+                 }
             },
             {
                 xtype: 'button',

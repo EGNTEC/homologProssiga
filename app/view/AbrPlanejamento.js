@@ -119,33 +119,50 @@ Ext.define('desloc.view.AbrPlanejamento', {
                     var comboUnid = Ext.getCmp('uniCombo').getValue();
                     var comboReg = Ext.getCmp('regCombo').getValue();
 
-                    FormAbrPlan.getForm().submit({
-                        method: 'post',
-                        url: '/teste2/php/Planejamento/InsAbrPlan.php',
-                        params: {
-                            mat: vMatcol.getValue(),
-                            unid: comboUnid,
-                            reg: comboReg
-                        },
-                        //waitMsg:'Enviando dados…',
-                        success: function() {
-
-                            var pGrid = Ext.getCmp('gridplan');
-                            var aStore = pGrid.getStore();
-                            aStore.load({
-                                params: {
-                                    mat: vMatcol.getValue(),
-                                    unid: comboUnid,
-                                    reg: comboReg
-                                }
-                            });
-
-                            Ext.getCmp('JanAbrPlan').destroy();
-
-                        },
-                        //failure:function(){ Ext.Msg.alert('Aviso', 'Já existe um planejamento para este período.'); }
-                        failure: function() { Ext.Msg.alert('Aviso', 'Não é possível abrir planejamento para esse período.'); }
-                    });
+                    Ext.MessageBox.show({
+                        msg : 'Inserindo abertura do planejamento, aguarde...',
+                        progressText : 'Inserindo...',
+                        width : 300,
+                        wait : true,
+                        waitConfig : 
+                        {
+                            duration : 20000,
+                            increment : 15,
+                            text : 'Inserindo...',
+                            scope : this,
+                            fn : function() {
+                                FormAbrPlan.getForm().submit({
+                                    method: 'post',
+                                    url: '/teste2/php/Planejamento/InsAbrPlan.php',
+                                    params: {
+                                        mat: vMatcol.getValue(),
+                                        unid: comboUnid,
+                                        reg: comboReg
+                                    },
+                                    //waitMsg:'Enviando dados…',
+                                    success: function() {
+                                        
+                                        var pGrid = Ext.getCmp('gridplan');
+                                        var aStore = pGrid.getStore();
+                                        aStore.load({
+                                            params: {
+                                                mat: vMatcol.getValue(),
+                                                unid: comboUnid,
+                                                reg: comboReg
+                                            }
+                                        });
+                                        
+                                        Ext.MessageBox.hide();
+                                        Ext.Msg.alert('Mensagem', 'Planejamento cadastrado com sucesso.');
+                                        Ext.getCmp('JanAbrPlan').destroy();
+            
+                                    },
+                                    //failure:function(){ Ext.Msg.alert('Aviso', 'Já existe um planejamento para este período.'); }
+                                    failure: function() { Ext.Msg.alert('Mensagem', 'Não é possível abrir planejamento para esse período.'); }
+                                });
+                            }
+                        }
+                     });                    
                 }
             }
 

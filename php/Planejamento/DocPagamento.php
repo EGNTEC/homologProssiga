@@ -3,7 +3,7 @@ session_start();
 //require("../session.php");
 include("../conn.php");
 
-$programa= $_SESSION['programa'];
+$programa = $_SESSION['programa'];
 $col    = $_SESSION['matricula'];
 $datHor = date('Y-m-d H:i:s');
 $dataHoje = date('Y-m-d');
@@ -186,12 +186,6 @@ $query = mssql_query($queryString) or die('Erro ao filtrar planejamentos');
 
 while ($arrayLote = mssql_fetch_array($query)) {
 
-   //header("Content-type: application/force-download");
-   //header("Cache-Control: no-cache, must-revalidate");
-   //header("Pragma: no-cache");
-   //header("Content-type: application/txt");
-   //header("Content-Disposition: attachment; filename=\"{$text}\"" );
-
    $numcad    =$arrayLote['numcad'];  #matricula do colaborador
    $vlrpag    =$arrayLote['vlrpag'];  #valor a ser pago
    $numemp    =$arrayLote['numemp'];  #Empresa
@@ -203,14 +197,12 @@ while ($arrayLote = mssql_fetch_array($query)) {
    $ven       = explode('/',$venArq);
    $ventitArq = $ven[1].'/'.$ven[0].'/'.$ven[2];
 
-   $ventit    =date('Y-m-d',strtotime($arrayLote['ventit']));
+   $ventit    = date('Y-m-d',strtotime($arrayLote['ventit']));
    //$ventitArq =date('d/m/Y',strtotime($arrayLote['ventit']));
    $codban =$arrayLote['codban'];
    $codage =$arrayLote['codage'];
    $numcta =$arrayLote['numcta'];
    $numseq =$arrayLote['numseq'];
-   //$datger =$arrayLote['datger'];
-   //$datger =date('Y-m-d',$arrayLote['datger']);
    $exp = explode('/',$datger);
    //$dtger = $exp[2].'-'.$exp[1].'-'.$exp[0];
    $dtger  =date('Y-m-d');
@@ -226,11 +218,11 @@ while ($arrayLote = mssql_fetch_array($query)) {
                      $vlrpag,$codccu,'$ventit',$codban,$codage,$numcta,$numseq,
                      $numcad,'$dtger','$datpla',0) ";
 
-  //Cálcular saldo para as pessoas do lote
+  //Calcular saldo para as pessoas do lote
   //$prSldo = mssql_query("Exec dbo.pr_calcular_saldo $numcad");
 
   //var_dump($string);
-  //$queryIns = mssql_query($string);
+  $queryIns = mssql_query($string);
 
   //Tratamento de data de vencimento 01/18/2017
      $newVen = explode('/',$ventit);

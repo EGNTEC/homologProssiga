@@ -155,13 +155,15 @@ Ext.create('Ext.container.Viewport', {
                 if(codcargo == 7800){
                     Ext.getCmp('idSolValr').show();
                     Ext.getCmp('histsaldo').show();
+                    Ext.getCmp('btnPre').show();
                     Ext.getCmp('btncadplan').hide();
                     Ext.getCmp('btnNReali').hide();
                     Ext.getCmp('btnPlan').hide();
                     Ext.getCmp('sitsubord').hide();
                     Ext.getCmp('idAdm').hide();
                     Ext.getCmp('btnPreGer').hide();
-                    Ext.getCmp('idGerSolVlr').hide();                    
+                    Ext.getCmp('idGerSolVlr').hide();
+                    Ext.getCmp('btnPreGer').hide();                    
                 
                   if(stspla === '0'){  
                     Ext.Msg.show({
@@ -178,11 +180,13 @@ Ext.create('Ext.container.Viewport', {
                     Ext.getCmp('idSolValr').show();
                     Ext.getCmp('idGerSolVlr').show();
                     Ext.getCmp('histsaldo').show();
+                    Ext.getCmp('btnPreGer').show();
                     Ext.getCmp('btncadplan').hide();
                     Ext.getCmp('btnNReali').hide();
                     Ext.getCmp('btnPlan').hide();
                     Ext.getCmp('sitsubord').hide();
                     Ext.getCmp('idAdm').hide();
+                    Ext.getCmp('btnPre').hide();
                     
                    if(stspla === '0'){ 
                     Ext.Msg.show({
@@ -879,6 +883,44 @@ Ext.create('Ext.container.Viewport', {
                                 text: 'Cadastrar Prestação',
                                 handler: function() {
 
+                                        //Tratamento para chamar a grid dos cargos de gestão
+                                        if(codcargo == 7800 || codcargo == 6500){
+
+                                            Ext.create('desloc.view.cargosGestao.PrestacaoGestao');
+                                            var regC = Ext.getCmp('regCombo');
+                                            var uniC = Ext.getCmp('uniCombo');
+                                            var colC = Ext.getCmp('usuCombo');
+                                            var status = Ext.getCmp('statusCombo');
+                                            var mesC = Ext.getCmp('mesCombo');
+                                            var anoC = Ext.getCmp('anoCombo');
+                                            var pGrid = Ext.getCmp('gridpre');
+
+                                            Ext.getCmp('janpresgest').setTitle('Prestação Cargos de Gestão');
+
+                                            colC.setDisabled(true);
+                                            colC.emptyText = col;
+                                            colC.applyEmptyText();
+                                            status.hide();
+
+                                            /*Ext.getCmp('btn_autori').hide();
+                                            Ext.getCmp('btn_reab').hide();
+                                            Ext.getCmp('btn_excel').hide();
+                                            Ext.getCmp('btn_conc').hide();
+                                            Ext.getCmp('btn_filtro').show();*/
+
+                                            colC.setWidth(450);
+                                            mesC.setWidth(265);
+                                            anoC.setMargin('-36 0 0 275');
+                                            anoC.setWidth(175);                                            
+
+                                            status.hide();
+                                            regC.hide();
+                                            uniC.hide();
+                                            anoC.show();
+                                            mesC.show();
+                                        }//Fim do tratamento
+                                        else{
+                                            
                                         Ext.create('desloc.view.PrestacaoForm');
                                         var regC = Ext.getCmp('regCombo');
                                         var uniC = Ext.getCmp('uniCombo');
@@ -1030,6 +1072,8 @@ Ext.create('Ext.container.Viewport', {
                                             regC.emptyText = "Sede";
                                             regC.applyEmptyText();
                                         }
+                                        
+                                      }  
 
                                     } // fim da função click
                             }, //fim do botão
