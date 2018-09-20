@@ -39,14 +39,14 @@ var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 
 });*/
 
-Ext.define('desloc.view.cargosGestao.CadPresGest', {
+Ext.define('desloc.view.cargosGestao.CadPresGestGO', {
     extend: 'Ext.window.Window',
-    alias: 'widget.cadprNov',
+    alias: 'widget.cadprnovgestgo',
     title: 'Cadastrar Prestação de Contas',
     iconCls: 'icon-grid',
     width: 990,
     height: 550,
-    id: 'cadprNovGest',
+    id: 'cadprnovgestgo',
     layout: 'fit',
     closable: true,
     closeAction: 'hide',

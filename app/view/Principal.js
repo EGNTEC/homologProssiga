@@ -1090,13 +1090,38 @@ Ext.create('Ext.container.Viewport', {
                                         //Tratamento para chamar a grid dos cargos de gestão
                                         if (codcargo == 6500) {
 
-                                            Ext.create('desloc.view.cargosGestao.CadPresGestGO');
+                                            Ext.create('desloc.view.cargosGestao.PrestacaoGestaoGO');
                                             var regC = Ext.getCmp('regCombo');
                                             var uniC = Ext.getCmp('uniCombo');
                                             var colC = Ext.getCmp('usuCombo');
                                             var status = Ext.getCmp('statusCombo');
                                             var mesC = Ext.getCmp('mesCombo');
                                             var anoC = Ext.getCmp('anoCombo');
+
+
+                                            /*Ext.getCmp('btn_autori').setDisabled(true);
+                                            Ext.getCmp('btn_reab').setDisabled(true);
+                                            Ext.getCmp('btn_conc').hide();
+                                            Ext.getCmp('btn_excel').show();*/
+
+                                            regC.hide();
+
+                                            uniC.hide();
+                                            colC.setDisabled(false);
+
+                                            uniC.setWidth(450);
+                                            colC.setWidth(450);
+                                            status.setWidth(450);
+                                            mesC.setWidth(265);
+                                            anoC.setMargin('-36 0 0 275');
+                                            anoC.setWidth(175);
+                                            //Ext.getCmp('btSairPre').setMargin('0 0 0 -180');
+
+                                            status.emptyText = "Selecione uma Situação";
+
+                                            colC.store.load({
+                                                params: { regId: codreg, codniv: niv }
+                                            });
 
                                         } else {
 

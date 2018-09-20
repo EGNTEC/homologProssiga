@@ -252,7 +252,25 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             var vlrpre = selectedRecords[0].get("vlrpre");
                             var jusprest = selectedRecords[0].get("juspre");
 
-                            Ext.MessageBox.show({
+                            var xGrid = Ext.getCmp('gridprNovGestCR');
+                            var gStore = xGrid.getStore();
+
+                            var totalGrid = gStore.sum('vlrdes');
+
+                            
+                            if(totalGrid > vlrparm){
+                                
+                                Ext.Msg.alert('Mensagem', 'O valor total da prestação de contas é superior ao limite permitido. Justifique!', function(btn, text) {
+            
+                                    if (btn == "ok") {
+                                        Ext.create('desloc.view.cargosGestao.JustificativaTeto');
+                                    }
+                                });
+                                Ext.getCmp('btn_encplanCR').setDisabled(true);
+
+                            }else{
+
+                                Ext.MessageBox.show({
                                 msg : 'Finalizando..',
                                 progressText : 'Finalizando prestação...',
                                 width : 300,
@@ -286,18 +304,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                                         }
                                                     });
             
-                                                } else
-                                                if (result == 1) {
-            
-                                                    Ext.Msg.alert('Mensagem', 'O valor total da prestação de contas é superior ao limite permitido. Justifique!', function(btn, text) {
-            
-                                                        if (btn == "ok") {
-                                                            Ext.create('desloc.view.JustificativaTeto');
-                                                        }
-                                                    });
-                                                    Ext.getCmp('btn_encplanCR').setDisabled(true);
-            
-                                                } else
+                                                } else                                                
                                                 if (result == 2) {
                                                     Ext.Msg.alert('Mensagem', 'Prestação de contas finalizada com sucesso.');
                                                     Ext.getCmp('btn_encplanCR').setDisabled(true);
@@ -373,7 +380,9 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                         });                                        
                                     }
                                 }
-                             });                            
+                             }); 
+                                
+                          }                                                       
 
                         } //fim da função click
                 },
@@ -415,32 +424,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                         }
                     }
                 },
-                /*{
-                    xtype: 'button',
-                    text: 'Arquivo de Prestação',
-                    id: 'btn_arqprest',
-                    name: 'btn_arqprest',
-                    //hrefTarget : "_blank",
-                    href: 'https://novoprossiga.inec.org.br/teste2/php/Prestacao/ArqPrest.php',
-                    iconCls: 'icon-prest',
-                    handler: function() {
-                        var sPanelGrid = Ext.getCmp('gridpre');
-                        var sStore = sPanelGrid.getStore();
-                        var selectedRecords = sPanelGrid.getSelectionModel().getSelection();
-                        var btn = Ext.getCmp('btn_arqprest');
-
-                        vId = selectedRecords[0].get("numseq");
-                        vMat = selectedRecords[0].get("numcad");
-                        vIdtrans = selectedRecords[0].get("tiptrp");
-                        vNom = selectedRecords[0].get("nomfun");
-                        vIdpla = selectedRecords[0].get("seqpla");
-                        vTotkm = selectedRecords[0].get("qtdkm");
-                        vTotpre = selectedRecords[0].get("vlrpre");
-                        vMesref = selectedRecords[0].get("mesref");
-
-                        btn.setParams({ id: vId, mat: vMat, idtrans: vIdtrans, nom: vNom, idpla: vIdpla, qtdkm: vTotkm, totpre: vTotpre, mesref: vMesref, colaborador: col, cargo: nomcargo });
-                    }
-                },*/
                 {
                     text: 'Sair',
                     iconCls: 'icon-sair',

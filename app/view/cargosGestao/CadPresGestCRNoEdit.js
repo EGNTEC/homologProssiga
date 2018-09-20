@@ -106,7 +106,181 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
 
             ], //fim da barra superioir da grid
             bbar: [
-                
+                {
+                    xtype: 'button',
+                    id: 'btn_validGerGO',
+                    text: 'Validar',
+                    iconCls: 'icon-validar',
+                    href: 'http://prossiga.inec.org.br/teste2/ArqPrest.php',
+                    handler: function() {
+
+                            if (codcargo == 6500) {
+                                var qGrid = Ext.getCmp('gridpreGestGO');    
+                            }else{
+                                var qGrid = Ext.getCmp('gridpreGestCR');                            
+                            }
+
+                            var sStore = qGrid.getStore();
+                            var selectedRecords = qGrid.getSelectionModel().getSelection();
+                            var vSituacao = selectedRecords[0].get("dessts");
+                            var vIdAbrt = selectedRecords[0].get("numseq");
+                            var comboSts = Ext.getCmp('statusCombo');
+                            var botao = Ext.getCmp('btn_validGer');
+                            //Tratamento para geração do arquivo.
+
+                            vId = selectedRecords[0].get("numseq");
+                            vMat = selectedRecords[0].get("numcad");
+                            vIdtrans = selectedRecords[0].get("tiptrp");
+                            vNom = selectedRecords[0].get("nomfun");
+                            vIdpla = selectedRecords[0].get("seqpla");
+                            vTotkm = selectedRecords[0].get("qtdkm");
+                            vTotpre = selectedRecords[0].get("vlrpre");
+                            vMesref = selectedRecords[0].get("mesref");
+                            //========================================
+                            botao.setParams({ id: vId, mat: vMat, idtrans: vIdtrans, nom: vNom, idpla: vIdpla, qtdkm: vTotkm, totpre: vTotpre, mesref: vMesref, colaborador: col, cargo: nomcargo });
+                            
+                            Ext.MessageBox.show({
+                                msg : 'Validando dados da prestação...',
+                                progressText : 'Validando...',
+                                width : 300,
+                                wait : true,
+                                waitConfig : 
+                                {
+                                    duration : 20000,
+                                    increment : 15,
+                                    text : 'Validando...',
+                                    scope : this,
+                                    fn : function() {
+
+                                        Ext.Ajax.request({
+                                            url: '/teste2/php/Prestacao/cargosGestao/validarPrestGestao.php',
+                                            params: {
+                                                action: 'post',
+                                                id: vIdAbrt
+                                            },
+                                            success: function(response) {
+                                                var result = Ext.JSON.decode(response.responseText);
+                                                //console.log(result);
+                                                if (result == 0) {
+            
+                                                    Ext.Msg.alert('Mensagem', 'Prestação de contas autorizada com sucesso.', function(btn, text) {
+            
+                                                        if (btn == "ok") {
+            
+                                                            if (situacao == "" || situacao == "null") {
+                                                                sStore.load({
+                                                                    params: {
+                                                                        sts: vStspre,
+                                                                        mat: usu
+                                                                    }
+                                                                });
+            
+                                                            } else {
+                                                                //console.log(situacao);
+                                                                sStore.load({
+                                                                    params: {
+                                                                        sts: situacao                                                                            
+                                                                    }
+                                                                });
+                                                            }            
+                                                            Ext.getCmp('cadpresgestcrnoedit').destroy();
+                                                        }
+                                                    });
+                                                }
+                                                if (result == 1) {
+            
+                                                    Ext.Msg.alert('Mensagem', 'Erro ao alterar a prestação!');
+                                                }
+                                            },
+                                            failure: function() {
+                                                Ext.Msg.alert('Mensagem', 'Problemas na base!');
+                                            }
+                                        });                                        
+                                     }
+                                  }
+                             });
+                        } // Fim da função click do botão.
+                },
+                {
+                    xtype: 'button',
+                    id: 'btn_reabGerGO',
+                    text: 'Reabrir',
+                    iconCls: 'icon-reabrir',
+                    handler: function() {
+                        if (codcargo == 6500) {
+                            var qGrid = Ext.getCmp('gridpreGestGO');    
+                        }else{
+                            var qGrid = Ext.getCmp('gridpreGestCR');                            
+                        }
+
+                        var sStore = qGrid.getStore();
+                        var selectedRecords = qGrid.getSelectionModel().getSelection();
+                        var vSituacao = selectedRecords[0].get("dessts");
+                        var vIdAbrt = selectedRecords[0].get("numseq");
+                        var comboSts = Ext.getCmp('statusCombo');
+
+                        Ext.MessageBox.show({
+                            msg : 'Reabrindo prestação...',
+                            progressText : 'Reabrindo...',
+                            width : 300,
+                            wait : true,
+                            waitConfig : 
+                            {
+                                duration : 20000,
+                                increment : 15,
+                                text : 'Reabrindo...',
+                                scope : this,
+                                fn : function() {
+
+                                    Ext.Ajax.request({
+                                        url: '/teste2/php/Prestacao/cargosGestao/reabrirPrestGestao.php',
+                                        params: {
+                                            action: 'post',
+                                            id: vIdAbrt
+                                        },
+                                        success: function(response) {
+                                            var result = Ext.JSON.decode(response.responseText);
+                                            //console.log(result);
+                                            if (result == 0) {
+            
+                                                Ext.Msg.alert('Mensagem', 'Prestação de contas reaberta com sucesso.', function(btn, text) {
+            
+                                                    if (btn == "ok") {
+            
+                                                        if (situacao == "" || situacao == "null") {
+                                                            sStore.load({
+                                                                params: {
+                                                                    sts: vStspre,
+                                                                    mat: usu
+                                                                }
+                                                            });
+            
+                                                        } else {
+                                                            //console.log(situacao);
+                                                            sStore.load({
+                                                                params: {
+                                                                    sts: situacao
+                                                                }
+                                                            });
+                                                        }
+                                                        Ext.getCmp('cadpresgestcrnoedit').destroy();
+                                                    }
+                                                });
+                                                //sStore.load();
+                                            }
+                                            if (result == 1) {
+                                                Ext.Msg.alert('Mensagem', 'Erro ao reabrir a prestação.');
+                                            }
+                                        },
+                                        failure: function() {
+                                            Ext.Msg.alert('Mensagem', 'Problemas na base.');
+                                        }
+                                    });                                    
+                                }
+                            }
+                        });                       
+                    }
+                },
                 {
                     xtype: 'button',
                     text: 'Arquivo de Prestação',
@@ -116,7 +290,13 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                     href: 'https://novoprossiga.inec.org.br/teste2/php/Prestacao/ArqPrest.php',
                     iconCls: 'icon-prest',
                     handler: function() {
-                        var sPanelGrid = Ext.getCmp('gridpreGestCR');
+                        if (codcargo == 6500) {
+                            var sPanelGrid = Ext.getCmp('gridpreGestGO');    
+                        }else{
+                            var sPanelGrid = Ext.getCmp('gridpreGestCR');
+                        
+                        }
+
                         var sStore = sPanelGrid.getStore();
                         var selectedRecords = sPanelGrid.getSelectionModel().getSelection();
                         var btn = Ext.getCmp('btn_arqprestCR');
@@ -359,7 +539,16 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
         //Acrecentar funções da Janela
         beforerender: function() {
 
-            var sPanelGridN = Ext.getCmp('gridpreGestCR');
+            if (codcargo == 6500) {
+                var sPanelGridN = Ext.getCmp('gridpreGestGO');
+                Ext.getCmp('btn_validGerGO').show();
+                Ext.getCmp('btn_reabGerGO').show();    
+            }else{
+                var sPanelGridN = Ext.getCmp('gridpreGestCR');
+                Ext.getCmp('btn_validGerGO').hide();
+                Ext.getCmp('btn_reabGerGO').hide();           
+            }
+
             var selectedRecord = sPanelGridN.getSelectionModel().getSelection();
 
             vValtrp = selectedRecord[0].get("vlrtrp"); 
@@ -415,6 +604,8 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
             //Tratamento para impressão do arquivo de importação
             if (vStspr >= 2) {
                 btn.setDisabled(false);
+                Ext.getCmp('btn_validGerGO').hide();
+                Ext.getCmp('btn_reabGerGO').hide();
             } else {
                 btn.setDisabled(true);
             }
@@ -424,7 +615,12 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
             //Tratamento ao fechar janela de cadastro de planejamento,
             //o reload da grid de abertura deve obedecer o valor da
             //situação.
-            var xGrid = Ext.getCmp('gridpreGestCR');
+            if (codcargo == 6500) {
+                var xGrid = Ext.getCmp('gridpreGestGO');    
+            }else{
+                var xGrid = Ext.getCmp('gridpreGestCR');
+            }
+            
             var selectedRecords = xGrid.getSelectionModel().getSelection();
             var xStore = xGrid.getStore();
             var situacao = Ext.getCmp('statusCombo').getValue();

@@ -6,17 +6,17 @@ var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 });
 var sm = Ext.create('Ext.selection.CheckboxModel');
 
-Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
+Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
     //renderTo: Ext.getBody(),
     extend: 'Ext.window.Window',
-    alias: 'widget.presgest',
+    alias: 'widget.presgestgo',
     title: 'Prestação',
     height: 550, //580,
     width: 990, //1240,
     //x: 2,//5,
     //y: 1,//7,
     autoScroll: true,
-    id: 'janpresgest',
+    id: 'janpresgestgo',
     //layout: 'fit',
     align: 'stretch',
     modal: true,
@@ -193,7 +193,7 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
         },
         {
             xtype: 'grid',
-            id: 'gridpreGestCR',
+            id: 'gridpreGestGO',
             height: 400,
             width: 1410,
             //selModel: sm,
@@ -202,13 +202,12 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                 mode: 'MULTI'
             },
             layout: 'fit',
-            store: Ext.create('desloc.store.cargosGestao.listarAbrPrest'),
+            store: Ext.create('desloc.store.cargosGestao.ListContrPresGO'),
             features: [{
                 ftype: 'summary'
             }],
             //autoScroll:false,
             columns: [
-
                 {
                     xtype: 'actionbuttoncolumn',
                     id: 'actbtnpreCR',
@@ -219,7 +218,7 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                     }],
                     listeners: {
                        click: function() {
-                          var sPanelGridPre = Ext.getCmp('gridpreGestCR');
+                          var sPanelGridPre = Ext.getCmp('gridpreGestGO');
                           var selectedRecords = sPanelGridPre.getSelectionModel().getSelection();  
                           
                           vDtfim = selectedRecords[0].get("dtfim");
@@ -253,8 +252,8 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                     dataIndex: 'mesref',
                     width: 90,
                     menuDisabled: true,
-                    id: 'mesrefCR',
-                    name: 'mesrefCR',
+                    id: 'mesrefGO',
+                    name: 'mesrefGO',
                     summaryRenderer: function() {
                         return 'Total:'
                     }
@@ -264,8 +263,8 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                     dataIndex: 'dtfim',
                     width: 93,
                     menuDisabled: true,
-                    id: 'dtfimCR',
-                    name: 'dtfimCR'
+                    id: 'dtfimGO',
+                    name: 'dtfimGO'
                 },
                 {
                     header: 'Id Planejamento',

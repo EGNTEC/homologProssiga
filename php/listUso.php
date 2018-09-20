@@ -25,7 +25,7 @@
   //Tratamento para os cargos G.O
   if($codcargo == 6500){
 
-    $queryString = "SELECT numcad,nomfun,numloc,numreg FROM tVTRHfunc WHERE numloc = $uniId And codcar = 7800 order by nomfun";
+    $queryString = "SELECT numcad,nomfun,numloc,numreg FROM tVTRHfunc WHERE numreg = $regId And codcar = 7800 order by nomfun";
 
   }
 
