@@ -29,6 +29,7 @@ func.nomloc AS nomloc,
 func.numcad AS numcad,
 func.nomfun AS nomfun,
 func.titred AS titred,
+func.codcar As codcar,
 abpr.qtdkm  AS qtdkm,
 abpr.juspre AS juspre,
 abpr.vlrpre AS vlrpre,
@@ -50,7 +51,7 @@ FROM tPROSabpr abpr
      INNER JOIN tPROSstts stts ON abpr.stspre = stts.numsts
      INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad 
 
-Where abpl.matfun = $col ";
+Where abpl.matfun = $col And abpl.datpla > '03-01-2018'";
 
 if($mes != ""){
 	$mes = " And DATEPART(MONTH,abpl.datpla) = $mes";

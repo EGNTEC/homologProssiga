@@ -111,7 +111,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                     id: 'btn_validGerGO',
                     text: 'Validar',
                     iconCls: 'icon-validar',
-                    href: 'http://prossiga.inec.org.br/teste2/ArqPrest.php',
+                    href: 'http://app.inec.org.br/teste2/ArqPrest.php',
                     handler: function() {
 
                             if (codcargo == 6500) {
@@ -125,7 +125,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                             var vSituacao = selectedRecords[0].get("dessts");
                             var vIdAbrt = selectedRecords[0].get("numseq");
                             var comboSts = Ext.getCmp('statusCombo');
-                            var botao = Ext.getCmp('btn_validGer');
+                            var botao = Ext.getCmp('btn_validGerGO');
                             //Tratamento para geração do arquivo.
 
                             vId = selectedRecords[0].get("numseq");
@@ -170,7 +170,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                                                             if (situacao == "" || situacao == "null") {
                                                                 sStore.load({
                                                                     params: {
-                                                                        sts: vStspre,
+                                                                        sts: 1,
                                                                         mat: usu
                                                                     }
                                                                 });
@@ -250,7 +250,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                                                         if (situacao == "" || situacao == "null") {
                                                             sStore.load({
                                                                 params: {
-                                                                    sts: vStspre,
+                                                                    sts: 1,
                                                                     mat: usu
                                                                 }
                                                             });
@@ -283,11 +283,51 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                 },
                 {
                     xtype: 'button',
+                    text: 'Ver Justificativa',
+                    tooltip: 'Justificativa',
+                    id: 'btn_justGerGo',
+                    iconCls: 'icon-zoom',
+                    handler: function() {
+                        var comboSts = Ext.getCmp('statusCombo');
+                        var comboStatus = comboSts.getValue();
+                        
+                        if (codcargo == 6500) {
+                            var qGrid = Ext.getCmp('gridpreGestGO');    
+                        }else{
+                            var qGrid = Ext.getCmp('gridpreGestCR');                            
+                        }
+
+                        var sStore = qGrid.getStore();
+                        var selectedRecords = qGrid.getSelectionModel().getSelection();
+                        vlrpre = selectedRecords[0].get("vlrpre");
+                        vIdAbrt = selectedRecords[0].get("numseq");
+                        juspre = selectedRecords[0].get("juspre");
+                        Vstspre = selectedRecords[0].get("stspre");
+                        Vtiptrp = selectedRecords[0].get("tiptrp");
+                        Vnomfun = selectedRecords[0].get("nomfun");
+                        Vdestrp = selectedRecords[0].get("destrp");
+                        Vnumcad = selectedRecords[0].get("numcad");
+
+                        if (juspre != null) {
+
+                            Ext.create('desloc.view.cargosGestao.ConfirmJustGO');
+                            Ext.getCmp('justValid').hide();
+                            Ext.getCmp('justReab').hide();
+                            Ext.getCmp('btn_val').hide();                            
+
+                        } else {
+
+                            Ext.Msg.alert('Mensagem', 'Não existe justicativa para essa prestação.');
+                        }
+                    }
+                },
+                {
+                    xtype: 'button',
                     text: 'Arquivo de Prestação',
                     id: 'btn_arqprestCR',
                     name: 'btn_arqprest',
                     //hrefTarget : "_blank",
-                    href: 'https://novoprossiga.inec.org.br/teste2/php/Prestacao/ArqPrest.php',
+                    href: 'http://app.inec.org.br/teste2/php/Prestacao/ArqPrest.php',
                     iconCls: 'icon-prest',
                     handler: function() {
                         if (codcargo == 6500) {
@@ -519,11 +559,10 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
 
             ], //fim das colunas grid
             plugins: [cellEditing],
-            listeners: {
-                
+            listeners: { 
+
             }
         }
-
     ],
     //
     /*dockedItems: [
@@ -540,15 +579,14 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
         beforerender: function() {
 
             if (codcargo == 6500) {
-                var sPanelGridN = Ext.getCmp('gridpreGestGO');
                 Ext.getCmp('btn_validGerGO').show();
                 Ext.getCmp('btn_reabGerGO').show();    
             }else{
-                var sPanelGridN = Ext.getCmp('gridpreGestCR');
                 Ext.getCmp('btn_validGerGO').hide();
                 Ext.getCmp('btn_reabGerGO').hide();           
             }
 
+            var sPanelGridN = Ext.getCmp('gridpreGestCR');                
             var selectedRecord = sPanelGridN.getSelectionModel().getSelection();
 
             vValtrp = selectedRecord[0].get("vlrtrp"); 
@@ -599,7 +637,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
 
            strPresGestCR.load({
                 params: { numseq: vSeqpla, tiptrp: vTiptrp, numcad: vNumcad }
-            });
+            });           
 
             //Tratamento para impressão do arquivo de importação
             if (vStspr >= 2) {
@@ -608,6 +646,15 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                 Ext.getCmp('btn_reabGerGO').hide();
             } else {
                 btn.setDisabled(true);
+            }
+
+            //Tratamento para justificativa
+            if(vjuspre != null){
+                
+                Ext.getCmp('btn_justGerGo').show();
+
+            }else{
+                Ext.getCmp('btn_justGerGo').hide();
             }
         },
 

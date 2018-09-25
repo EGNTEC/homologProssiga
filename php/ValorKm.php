@@ -4,6 +4,7 @@ require("session.php");
 include("conn.php");
 
 $codprg  = $_SESSION['usu_codprg'];
+$codcargo= $_SESSION['codcargo'];
 $descTrp = $_POST['tipTrp'];
 $dataprestacao = $_POST['datpres'];
 
@@ -39,6 +40,15 @@ p.tiptrp = q.tiptrp
 and q.datvig <= '$Dtcad'
 and p.tiptrp  = $idTrp
 and q.numprg  = $numprg)";
+
+if ($codcargo == 6500 || $codcargo == 7800) {
+  
+  $descKm = " SELECT p.vlrtrp as vlrtrp FROM tPROSprtrge p
+   WHERE p.datvig=(select max(q.datvig)
+     from tPROSprtrge q where
+  p.tiptrp = q.tiptrp
+  and q.datvig <= '$Dtcad' and p.parm  = $codcargo )";
+}
 
 //var_dump($descKm);
 $valKm = mssql_query($descKm);

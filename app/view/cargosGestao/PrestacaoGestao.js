@@ -172,10 +172,6 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                         editable: false,
                         selectOnTab: false,
                         mode: 'local',
-                        /*style:{
-                           margin:'-36 0 0 310'
-                         },*/
-                        //disabled:true,
                         lastQuery: ''
                     },
                     {
@@ -286,6 +282,12 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                     width: 258,
                     menuDisabled: true,
                     summaryType: 'count'
+                },
+                {
+                    header: 'Cod. cargo',
+                    dataIndex: 'codcar',
+                    width: 180,
+                    menuDisabled: true
                 },
                 {
                     header: 'Cargo',

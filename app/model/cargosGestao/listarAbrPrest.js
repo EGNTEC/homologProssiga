@@ -19,6 +19,7 @@ Ext.define('desloc.model.cargosGestao.listarAbrPrest',{
         {name:'numcad'},
         {name:'juspre'},
         {name:'titred'},
-        {name:'dtfim'}
+        {name:'dtfim'},
+        {name:'codcar'}
     ]
 });

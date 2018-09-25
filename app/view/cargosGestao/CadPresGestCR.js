@@ -389,7 +389,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                 {
                     text: 'Deslocamento Adicional',
                     iconCls: 'icon-moedas',
-                    //disabled:true,
                     tooltip: 'Cadastrar deslocamento adicional',
                     id: 'btnnovCR',
                     listeners: {
@@ -407,9 +406,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             var valpsg = Ext.getCmp('valpsg');
                             var hdini = Ext.getCmp('hdini');
                             var hdfim = Ext.getCmp('hdfim');
-                            //var vlrtot = Ext.getCmp('vlrtot');
                             var vlrad = Ext.getCmp('vlrad');
-                            //var tiptra = Ext.getCmp('tiptra');
                             dt = '0/00/0000';
 
                             var qGrid = Ext.getCmp('gridpreGestCR');
@@ -715,7 +712,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                     var selectedRecords = Jgrid.getSelectionModel().getSelection();
                                     var rowSelected = Jgrid.view.getSelectionModel().getCurrentPosition().row;
                                     var vTransp = selectedRecords[0].get('destrp');
-                                    //var vOdofim   = Ext.getCmp('hodfimNov').getValue();
                                     var vOdofimC = Ext.getCmp('hodfimNovCR');
 
                                     var models = Jgrid.getStore().getRange();
@@ -791,7 +787,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                     }
                 },
                 {
-                    //header:'D',
                     width: 120,
                     dataIndex: 'Coluna1',
                     align: 'right',
@@ -805,7 +800,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                 },
                 {
                     xtype: 'numbercolumn',
-                    //header: 'E',
                     align: 'center',
                     dataIndex: 'odoini',
                     width: 69,
@@ -846,15 +840,11 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                 var Oini = selectedRecords[0].get('odoini');
                                 var vTrans = selectedRecords[0].get('destrp');
                                 var vQtkm = Ext.getCmp('hodiniNovCR').getValue();
-                                //var vValpas= Ext.getCmp('hodfimNov').getValue();
                                 var vQtkmE = Ext.getCmp('hodiniNovCR');
                                 var vVlr = selectedRecords[0].get('vlrdes');
                                 var rowSelected = sPanelGrid.view.getSelectionModel().getCurrentPosition().row;
                                 var DescC = Ext.getCmp('descNovCR');
-                                //var DescE = Ext.getCmp('descNov').getValue();
                                 var Desc = selectedRecords[0].get('juspre');
-
-                                //Ext.getCmp('tiptrpNov').setEditable(false);
 
                                 if (vQtkm < 0) {
 
@@ -881,7 +871,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                 g_vOdiniEd = Oini;
                                 g_VEdIni = vQtkmE;
                                 g_vOdfim = Ofim; //vOdofim
-                                //g_vOdfimEd = vValpas;
                                 g_VlrAnt = vVlr;
                                 g_RowAnt = rowSelected;
                                 g_TrpAnt = vTrans;
@@ -932,7 +921,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                     if (Ofim === null || Ofim == 0) {
                                         
                                     } else {
-
 
                                         var KM = parseInt(Ofim) - parseInt(vQtkm);
                                         selectedRecords[0].set("quilometro", parseInt(KM));
@@ -1038,7 +1026,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                             models[g_RowAnt].set("quilometro", km);
 
                                             g_vOdini = 0;
-                                            //g_RowAnt  =0;
                                             g_vOdiniEd = 0;
                                             g_vOdfim = 0;
 
@@ -1088,8 +1075,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
 
                 },
                 {
-                    //xtype: 'numbercolumn',
-                    //header: 'G',
                     width: 69,
                     align: 'center',
                     dataIndex: 'odofim',
@@ -1231,7 +1216,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                     if (vOdofim == 0 && Oini == 0) {
                                         selectedRecords[0].set("juspre", '');
                                     }
-                                    //}
+                                    
 
                                 } else { //cálculo para transporte coletivo.
 
@@ -1241,7 +1226,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             },
                             specialkey: function(field, e) {
 
-                                    //var models  = JGrid.getStore().getRange();
                                     var Jgrid = Ext.getCmp('gridprNovGestCR');
                                     var sStore = Jgrid.getStore();
                                     var selectedRecords = Jgrid.getSelectionModel().getSelection();
@@ -1287,9 +1271,8 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
 
                                             if (vTransp == "Proprio") { //cálculo para transporte Proprio.
 
-                                                if (vVlr < 0) { //(Ofim < Oini) || (vVlr<0)
+                                                if (vVlr < 0) { 
 
-                                                    //Ext.getCmp('hodfim').setValue(0);
                                                     Ext.Msg.alert('Mensagem', 'O hodometro final é menor que o inicial.');
 
                                                     models[rowSelected].set("quilometro", 0);
@@ -1396,9 +1379,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                     summaryType: 'sum',
                     summaryRenderer: function(value) {
 
-                        //return Ext.String.format('Total R$ {0}', parseFloat(value));
                         var metodo = Ext.util.Format.maskRenderer('R$ #9.999.990,00', true);
-                        //metodo = Ext.util.CSS.createStyleSheet('color:red','value');
                         if (value.length > 1) {
 
                             metodo = Ext.util.Format.maskRenderer('R$ #9.999.990,00', true);
@@ -1447,7 +1428,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                     var vVlr = selectedRecords[0].get('vlrdes');
                                     var DescC = Ext.getCmp('descNovCR');
                                     var DescE = Ext.getCmp('descNovCR').getValue();
-                                    //var vOdofim   = Ext.getCmp('hodfimNov').getValue();
                                     var vOdofimC = Ext.getCmp('hodfimNovCR');
 
                                     var models = Jgrid.getStore().getRange();
@@ -1465,9 +1445,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                                         case e.ENTER:
                                             //e.keyCode = e.TAB;
                                             if (vTransp == "Coletivo") {
-
-                                                //alert(Ofim);
-                                                //alert(Oini);
 
                                                 if (
                                                     (Ofim != 0 && Oini == 0) || (Ofim == 0 && Oini != 0) || (Ofim == 0 && Oini == 0) ||
@@ -1714,7 +1691,6 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
                             g_vOdini = 0;
                             g_DescE = '';
                         }
-
                     }
 
                     if (numevt == 1) {
@@ -1799,41 +1775,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCR', {
             Ext.getCmp('resMatricula').setText(vNumcad);
             Ext.getCmp('resNome').setText(vNomfun);
             Ext.getCmp('resLocal').setText(vNomloc);
-            Ext.getCmp('resPeriodo').setText(vDatpla);
-           
-            /*if (vStspr != 4) {
-
-                btn.hide();
-                Ext.getCmp('btn_encplanCR').hide();
-                Ext.getCmp('btn_saveCR').hide();
-                Ext.getCmp('btnnovCR').hide();
-                Ext.getCmp('btn_justCR').hide();
-                Ext.getCmp('btn_validCR').hide();
-            } else
-            if (niv == 1 || niv == 2 || niv == 3 || niv == 4) {
-
-                if (vStspr == 0) { //aberto
-
-                    btn.hide();
-                    Ext.getCmp('btn_encplanCR').setDisabled(false);
-                    Ext.getCmp('btn_saveCR').show();
-                    Ext.getCmp('btnnovCR').show();
-                    Ext.getCmp('btn_justCR').hide();
-                    Ext.getCmp('btn_validCR').hide();
-
-                } else
-                if (vStspr > 0) {
-
-                    btn.hide();
-                    Ext.getCmp('btn_encplanCR').hide();
-                    Ext.getCmp('btn_saveCR').hide();
-                    Ext.getCmp('btnnovCR').hide();
-                    Ext.getCmp('btn_justCR').hide();
-                    Ext.getCmp('btn_validCR').hide();
-
-                }
-
-            }*/
+            Ext.getCmp('resPeriodo').setText(vDatpla);           
 
             tGrid = Ext.getCmp('gridprNovGestCR');
             strPresGestCR = tGrid.getStore();

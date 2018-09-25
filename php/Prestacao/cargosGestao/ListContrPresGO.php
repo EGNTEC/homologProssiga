@@ -50,7 +50,7 @@ FROM tPROSabpr abpr
      INNER JOIN tPROSstts stts ON abpr.stspre = stts.numsts
      INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
 
-Where func.codcar = 7800 And abpr.stspre = 1 ";
+Where func.codcar = 7800 And func.numloc = $codreg";
 
 if($mat != "") {
 
@@ -65,7 +65,15 @@ if($ano != ""){
 	$ano = " And DATEPART(MONTH,abpl.datpla) = $ano";
 }
 
-$queryString = $queryString.$mat.$mes.$ano; 
+if($sts != "" || $sts != null){
+   $sts = " And abpr.stspre = $sts";
+
+}else
+if($sts == "" || $sts == null){
+  $sts = " And abpr.stspre = 1"; 
+}
+
+$queryString = $queryString.$mat.$mes.$ano.$sts; 
 
 //var_dump($queryString);	
 
