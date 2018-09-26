@@ -114,7 +114,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                     href: 'http://app.inec.org.br/teste2/ArqPrest.php',
                     handler: function() {
 
-                            if (codcargo == 6500) {
+                            if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
                                 var qGrid = Ext.getCmp('gridpreGestGO');    
                             }else{
                                 var qGrid = Ext.getCmp('gridpreGestCR');                            
@@ -576,17 +576,15 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
      ],*/
     listeners: {
         //Acrecentar funções da Janela
-        beforerender: function() {
+        beforerender: function() {            
 
-            if (codcargo == 6500) {
-                Ext.getCmp('btn_validGerGO').show();
-                Ext.getCmp('btn_reabGerGO').show();    
+            if(mat == 858 || mat == 13917 || mat == 16963){
+
+                var sPanelGridN = Ext.getCmp('gridpreGestGO');  
             }else{
-                Ext.getCmp('btn_validGerGO').hide();
-                Ext.getCmp('btn_reabGerGO').hide();           
+                var sPanelGridN = Ext.getCmp('gridpreGestCR');
             }
 
-            var sPanelGridN = Ext.getCmp('gridpreGestCR');                
             var selectedRecord = sPanelGridN.getSelectionModel().getSelection();
 
             vValtrp = selectedRecord[0].get("vlrtrp"); 
@@ -600,6 +598,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
             vjuspre = selectedRecord[0].get("juspre"); 
             vNomloc = selectedRecord[0].get("nomloc"); 
             vDtfim = selectedRecord[0].get("dtfim");
+            vCodcar = selectedRecord[0].get("codcar");
 
             dateParm = Ext.Date.parse(vDtfim, "d/m/Y");
             dateH = mes + '/' + dia + '/' + ano;
@@ -637,7 +636,20 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
 
            strPresGestCR.load({
                 params: { numseq: vSeqpla, tiptrp: vTiptrp, numcad: vNumcad }
-            });           
+            });
+            
+            if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
+                Ext.getCmp('btn_validGerGO').show();
+                Ext.getCmp('btn_reabGerGO').show();
+                
+                if(vCodcar == 6500){
+                    Ext.getCmp('btn_validGerGO').hide();
+                    Ext.getCmp('btn_reabGerGO').hide(); 
+                }                
+            }else{
+                Ext.getCmp('btn_validGerGO').hide();
+                Ext.getCmp('btn_reabGerGO').hide();           
+            }
 
             //Tratamento para impressão do arquivo de importação
             if (vStspr >= 2) {
@@ -662,12 +674,8 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
             //Tratamento ao fechar janela de cadastro de planejamento,
             //o reload da grid de abertura deve obedecer o valor da
             //situação.
-            if (codcargo == 6500) {
-                var xGrid = Ext.getCmp('gridpreGestGO');    
-            }else{
-                var xGrid = Ext.getCmp('gridpreGestCR');
-            }
-            
+                        
+            var xGrid = Ext.getCmp('gridpreGestCR');
             var selectedRecords = xGrid.getSelectionModel().getSelection();
             var xStore = xGrid.getStore();
             var situacao = Ext.getCmp('statusCombo').getValue();

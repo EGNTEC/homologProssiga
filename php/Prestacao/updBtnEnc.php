@@ -76,6 +76,8 @@ $vlrprm = $arrayValTeto['vlrprm'];
         
        $queryUpdt = "UPDATE tPROSabpr SET stspre=1 WHERE numseq = '$id' ";
        $query = mssql_query($queryUpdt) or die('Erro ao alterar registro.');
+
+       //echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
        
        $prSldo = mssql_query("Exec dbo.pr_calcular_saldo $mat");
 

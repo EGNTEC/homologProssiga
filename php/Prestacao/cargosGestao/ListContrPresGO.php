@@ -18,6 +18,15 @@ $sts    = $_GET['sts'];
 $mes    = $_GET['mes'];
 $ano    = $_GET['ano'];
 
+//Tratamento para verificar o tipo de cargo
+if ($codcargo == 6500){
+    $codcargo = 7800;
+}
+
+if ($col == 858 || $col == 13917 || $col == 16963){
+    $codcargo = 6500;
+}
+
 $queryString = " SELECT Substring (Convert (Varchar(10), abpl.datpla, 103),4,7) AS mesref,
 
 (Select Coalesce ((Select	max(Convert(Varchar(10), datlim, 103))
@@ -39,7 +48,7 @@ abpr.numseq AS numseq,
 abpr.seqpla AS seqpla,
 abpl.tiptrp AS tiptrp,
 (select vlrtrp from tPROSprtrge prtr
-where prtr.parm ='7800'
+where prtr.parm ='$codcargo'
 and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
                  where prtr2.numprg = prtr.numprg 
                  and	  prtr2.datvig <= abpl.datpla)) as vlrtrp
@@ -50,7 +59,11 @@ FROM tPROSabpr abpr
      INNER JOIN tPROSstts stts ON abpr.stspre = stts.numsts
      INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
 
-Where func.codcar = 7800 And func.numloc = $codreg";
+Where func.codcar = $codcargo ";
+
+if ($col != 858 && $col != 13917 && $col != 16963) {
+     $loc = " And func.numloc = $codreg";
+}
 
 if($mat != "") {
 
@@ -62,7 +75,7 @@ if($mes != ""){
 }
 
 if($ano != ""){
-	$ano = " And DATEPART(MONTH,abpl.datpla) = $ano";
+	$ano = " And DATEPART(YEAR,abpl.datpla) = $ano";
 }
 
 if($sts != "" || $sts != null){
@@ -73,7 +86,7 @@ if($sts == "" || $sts == null){
   $sts = " And abpr.stspre = 1"; 
 }
 
-$queryString = $queryString.$mat.$mes.$ano.$sts; 
+$queryString = $queryString.$loc.$mat.$mes.$ano.$sts; 
 
 //var_dump($queryString);	
 

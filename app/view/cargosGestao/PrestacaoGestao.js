@@ -372,8 +372,40 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
         dock: 'bottom',
         items: [
 
+            {
+                xtype: 'button',
+                text: 'Buscar',
+                tooltip: 'Localizar Prestação',
+                id: 'btn_buscGO',
+                iconCls: 'icon-buscar',
+                handler: function() {
 
-                        
+                    if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
+                        var pGrid = Ext.getCmp('gridpreGestGO');    
+                    }else{
+                        var pGrid = Ext.getCmp('gridpreGestCR');
+                    }
+
+                    var comboUso = Ext.getCmp('usuCombo');
+                    var comboUnid = Ext.getCmp('uniCombo');
+                    var comboReg = Ext.getCmp('regCombo');
+                    var comboSts = Ext.getCmp('statusCombo');
+                    var comboMes = Ext.getCmp('mesCombo').getValue();
+                    var comboAno = Ext.getCmp('anoCombo').getValue();
+
+                    var aStore = pGrid.getStore();
+                    aStore.load({
+                        params: {
+                            mat: comboUso.getValue(),
+                            unid: comboUnid.getValue(),
+                            reg: comboReg.getValue(),
+                            sts: comboSts.getValue(),
+                            mes: comboMes,
+                            ano: comboAno
+                        }
+                    });                   
+                }
+            }                        
         ]
     }],
     listeners: {

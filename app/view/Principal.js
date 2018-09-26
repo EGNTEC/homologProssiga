@@ -40,6 +40,7 @@ Ext.create('Ext.container.Viewport', {
 
                 Ext.getCmp('idSolValr').hide();
                 Ext.getCmp('idGerSolVlr').show();
+                Ext.getCmp('btnPreGer').show();
                 Ext.getCmp('sitsubord').hide();
                 Ext.getCmp('btncadplan').hide();
                 Ext.getCmp('btnNReali').hide();
@@ -47,6 +48,7 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('idAdm').hide();
                 Ext.getCmp('histsaldo').hide();
                 Ext.getCmp('sit').hide();
+                Ext.getCmp('btnPre').hide();
 
                 if(resultado != '0'){ 
                     Ext.Msg.show({
@@ -1088,7 +1090,8 @@ Ext.create('Ext.container.Viewport', {
                                 handler: function() {
 
                                         //Tratamento para chamar a grid dos cargos de gestão
-                                        if (codcargo == 6500) {
+                                        if (codcargo == 6500 || mat == 858 ||
+                                            mat == 13917 || mat == 16963) {
 
                                             Ext.create('desloc.view.cargosGestao.PrestacaoGestaoGO');
                                             var regC = Ext.getCmp('regCombo');
@@ -1097,12 +1100,8 @@ Ext.create('Ext.container.Viewport', {
                                             var status = Ext.getCmp('statusCombo');
                                             var mesC = Ext.getCmp('mesCombo');
                                             var anoC = Ext.getCmp('anoCombo');
-
-
-                                            /*Ext.getCmp('btn_autori').setDisabled(true);
-                                            Ext.getCmp('btn_reab').setDisabled(true);
-                                            Ext.getCmp('btn_conc').hide();
-                                            Ext.getCmp('btn_excel').show();*/
+                                            
+                                            Ext.getCmp('janpresgestgo').setTitle('Prestação Cargos de Gestão');
 
                                             regC.hide();
 

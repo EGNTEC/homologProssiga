@@ -7,21 +7,16 @@ var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
 var sm = Ext.create('Ext.selection.CheckboxModel');
 
 Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
-    //renderTo: Ext.getBody(),
     extend: 'Ext.window.Window',
     alias: 'widget.presgestgo',
     title: 'Prestação',
-    height: 550, //580,
-    width: 990, //1240,
-    //x: 2,//5,
-    //y: 1,//7,
+    height: 550,
+    width: 990,
     autoScroll: true,
     id: 'janpresgestgo',
-    //layout: 'fit',
     align: 'stretch',
     modal: true,
     resizable: 'true',
-    //minimizable:'true',
     maximizable: 'true',
     align: 'center',
     autoShow: true,
@@ -97,7 +92,6 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
                         store: Ext.create('desloc.store.Unids'),
                         triggerAction: 'all',
                         mode: 'local',
-                        //lastQuery:'',
                         disabled: true,
                         listeners: {
                             select: {
@@ -141,13 +135,11 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
                         triggerAction: 'all',
                         mode: 'local',
                         editable: false,
-                        //disabled:true,
                         lastQuery: ''
                     },
                     {
                         xtype: 'combo',
                         id: 'mesCombo',
-                        //width:280,
                         fieldLabel: 'Referência',
                         emptyText: 'Mês',
                         store: Ext.create('desloc.store.MesS'),
@@ -156,14 +148,11 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
                         triggerAction: 'all',
                         editable: false,
                         mode: 'local',
-                        //disabled:true,
                         lastQuery: ''
                     },
                     {
                         xtype: 'combo',
                         id: 'anoCombo',
-                        //width:180,
-                        //fieldLabel:'Ano',
                         emptyText: 'Ano',
                         store: Ext.create('desloc.store.AnoS'),
                         displayField: 'name',
@@ -172,10 +161,6 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
                         editable: false,
                         selectOnTab: false,
                         mode: 'local',
-                        /*style:{
-                           margin:'-36 0 0 310'
-                         },*/
-                        //disabled:true,
                         lastQuery: ''
                     },
                     {
@@ -196,7 +181,6 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
             id: 'gridpreGestGO',
             height: 400,
             width: 1410,
-            //selModel: sm,
             selModel: {
                 selType: 'checkboxmodel',
                 mode: 'MULTI'
@@ -206,7 +190,6 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
             features: [{
                 ftype: 'summary'
             }],
-            //autoScroll:false,
             columns: [
                 {
                     xtype: 'actionbuttoncolumn',
@@ -377,7 +360,7 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestaoGO', {
                 iconCls: 'icon-buscar',
                 handler: function() {
 
-                    if (codcargo == 6500) {
+                    if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
                         var pGrid = Ext.getCmp('gridpreGestGO');    
                     }else{
                         var pGrid = Ext.getCmp('gridpreGestCR');
