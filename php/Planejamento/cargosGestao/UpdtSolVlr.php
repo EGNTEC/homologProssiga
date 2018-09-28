@@ -11,6 +11,7 @@ $vlrsol = $_POST['valsol'];
 $solicitante  = $_SESSION['matricula'];
 $nomSolicitante = $_SESSION['colaborador'];
 $numRegional = $_SESSION['codreg'];
+$codcargo= $_SESSION['codcargo'];
 
 $acao = "corrigido";
 

@@ -136,6 +136,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                             vTotkm = selectedRecords[0].get("qtdkm");
                             vTotpre = selectedRecords[0].get("vlrpre");
                             vMesref = selectedRecords[0].get("mesref");
+                            vJuspre = selectedRecords[0].get("juspre");
                             //========================================
                             botao.setParams({ id: vId, mat: vMat, idtrans: vIdtrans, nom: vNom, idpla: vIdpla, qtdkm: vTotkm, totpre: vTotpre, mesref: vMesref, colaborador: col, cargo: nomcargo });
                             
@@ -156,7 +157,9 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                                             url: '/teste2/php/Prestacao/cargosGestao/validarPrestGestao.php',
                                             params: {
                                                 action: 'post',
-                                                id: vIdAbrt
+                                                id: vIdAbrt,
+                                                justificativa: vJuspre,
+                                                matricula: vMat
                                             },
                                             success: function(response) {
                                                 var result = Ext.JSON.decode(response.responseText);
@@ -207,7 +210,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                     text: 'Reabrir',
                     iconCls: 'icon-reabrir',
                     handler: function() {
-                        if (codcargo == 6500) {
+                        if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
                             var qGrid = Ext.getCmp('gridpreGestGO');    
                         }else{
                             var qGrid = Ext.getCmp('gridpreGestCR');                            
@@ -217,6 +220,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                         var selectedRecords = qGrid.getSelectionModel().getSelection();
                         var vSituacao = selectedRecords[0].get("dessts");
                         var vIdAbrt = selectedRecords[0].get("numseq");
+                        vMat = selectedRecords[0].get("numcad");
                         var comboSts = Ext.getCmp('statusCombo');
 
                         Ext.MessageBox.show({
@@ -236,7 +240,8 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                                         url: '/teste2/php/Prestacao/cargosGestao/reabrirPrestGestao.php',
                                         params: {
                                             action: 'post',
-                                            id: vIdAbrt
+                                            id: vIdAbrt,
+                                            matricula: vMat
                                         },
                                         success: function(response) {
                                             var result = Ext.JSON.decode(response.responseText);
@@ -291,7 +296,7 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                         var comboSts = Ext.getCmp('statusCombo');
                         var comboStatus = comboSts.getValue();
                         
-                        if (codcargo == 6500) {
+                        if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
                             var qGrid = Ext.getCmp('gridpreGestGO');    
                         }else{
                             var qGrid = Ext.getCmp('gridpreGestCR');                            
@@ -330,11 +335,10 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
                     href: 'http://app.inec.org.br/teste2/php/Prestacao/ArqPrest.php',
                     iconCls: 'icon-prest',
                     handler: function() {
-                        if (codcargo == 6500) {
+                        if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
                             var sPanelGrid = Ext.getCmp('gridpreGestGO');    
                         }else{
-                            var sPanelGrid = Ext.getCmp('gridpreGestCR');
-                        
+                            var sPanelGrid = Ext.getCmp('gridpreGestCR');                        
                         }
 
                         var sStore = sPanelGrid.getStore();
@@ -674,8 +678,13 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
             //Tratamento ao fechar janela de cadastro de planejamento,
             //o reload da grid de abertura deve obedecer o valor da
             //situação.
-                        
-            var xGrid = Ext.getCmp('gridpreGestCR');
+            
+            if (codcargo == 6500 || mat == 858 || mat == 13917 || mat == 16963) {
+                var xGrid = Ext.getCmp('gridpreGestGO');    
+            }else{
+                var xGrid = Ext.getCmp('gridpreGestCR');                        
+            }
+            
             var selectedRecords = xGrid.getSelectionModel().getSelection();
             var xStore = xGrid.getStore();
             var situacao = Ext.getCmp('statusCombo').getValue();

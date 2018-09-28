@@ -48,13 +48,12 @@ Ext.define('desloc.view.cargosGestao.JustificativaTeto', {
 
                     if (codcargo == 7800){
 
-                        var pGrid = Ext.getCmp('gridpreGestCR');
                         var nJan = Ext.getCmp('cadpresgestcr');
                     }else{
-
-                        var pGrid = Ext.getCmp('gridpreGestGO');
-                        var nJan = Ext.getCmp('cadprnovgestgo');
+                        var nJan = Ext.getCmp('cadprnovgestgop');
                     }
+
+                    var pGrid = Ext.getCmp('gridpreGestCR');                        
                     
                     var pStore = pGrid.getStore();
 
