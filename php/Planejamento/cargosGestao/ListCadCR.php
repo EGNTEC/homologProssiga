@@ -57,7 +57,7 @@ if($ano != ""){
 
 $queryString = $queryString.$mes.$ano; 
 
-var_dump($queryString);	
+//var_dump($queryString);	
 
 $query = mssql_query($queryString) or die('Erro ao filtrar aberturas');
 

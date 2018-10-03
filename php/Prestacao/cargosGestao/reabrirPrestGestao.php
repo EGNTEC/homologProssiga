@@ -22,7 +22,7 @@ $nomSolicitante= $arrayGer['nomfun'];
 $email= $arrayGer['emacom']; //Para quem enviar
 
 $queryUpdt = "UPDATE tPROSabpr SET stspre=0 WHERE numseq = '$id' ";
-echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
+echo enviarEmail('anacarla.silva@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
         
 $query = mssql_query($queryUpdt) or die('Erro ao alterar registro.');
 

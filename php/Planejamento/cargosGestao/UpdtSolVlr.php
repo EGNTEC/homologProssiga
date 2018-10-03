@@ -40,7 +40,7 @@ if($queryUpdtVlr == true) {
         $nomAprovador = 'Gerência Geral';
     }
 
-    echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
+    echo enviarEmail('anacarla.silva@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
 
     echo "{success:1}";
  } else {

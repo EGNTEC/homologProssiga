@@ -3,7 +3,7 @@ session_start();
 ob_start();
 require("../session.php");
 include('../conn.php');
-include("../Funcoes/enviarEmail.php");
+
 
 //variaveis de sistema
 $dia = 01;
@@ -126,8 +126,9 @@ $queryUpdtData = mssql_query($strUpdtData);
  $strQuery = mssql_query($str);
 
  $var = 0;
-
+ 
  if($codcargo == 6500){
+  include("enviarEmailAbertura.php"); 
   echo enviarEmail('grupogerenciageraloperacoes@inec.org.br',$mat,$nome,000,'Gerência Geral',$acao);
 }
 

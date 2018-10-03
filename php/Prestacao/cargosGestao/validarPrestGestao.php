@@ -26,7 +26,7 @@ if($justificativa != ""){// o e-mail deverá ir  para o grupo administrativo
     $nomAprovador = 'Administrador Prossiga';
 
     $queryUpdt = "UPDATE tPROSabpr SET stspre=3 WHERE numseq = '$id' ";
-    echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
+    echo enviarEmail('anacarla.silva@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
 }else{
     //Quem recebeŕa o e-mail.
     $strGer = "Select numcad,nomfun,numreg,emacom From tVTRHfunc Where numcad = $matSelecionado";

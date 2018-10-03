@@ -117,13 +117,12 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                     allowBlank: false,
                     listeners: {
                         change: function(field, value) {
-                            value = parseInt(value, 10);
-                            //field.setValue(value);
+                            value = parseFloat(value, 10);
                             if (value < 0) {
 
                                 field.setValue(value * (-1));
                             }
-
+                            
                             if(value > vlrparm){
 
                                 Ext.getCmp('btn_inserir').setDisabled(true)

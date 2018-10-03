@@ -31,7 +31,7 @@ if($data != "" || $data != null) {
         $strUpdate = "Update tPROSabpl Set stspla = 3 Where numseq = $numseq";
         $strUpdateQuery = mssql_query($strUpdate);
 
-        echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
+        echo enviarEmail('anacarla.silva@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
 
     }
 
