@@ -1,7 +1,7 @@
 <?php 
+session_start();
 header('Content-Type: text/html; charset=UTF-8');
 ini_set('default_charset','utf-8');
-include("../../conn.php");
 require("../../phpmailer/class.phpmailer.php");
 
 function enviarEmail($email,$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao){

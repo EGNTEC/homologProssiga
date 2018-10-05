@@ -20,12 +20,12 @@ $ano    = $_GET['ano'];
 
 //Tratamento para o tipo de cargo
 
-if($niv == 6){
+/*if($niv == 6){
 	$cargo = 6500;
 }else
 if($niv == 2){
 	$cargo = 7800;
-}
+}*/
 
 $String = " SELECT distinct Substring (Convert (Varchar(10), abpl.datpla, 103),4,7) AS datpla,
 func.nomloc AS nomloc,
@@ -41,7 +41,7 @@ stts.dessts AS dessts,
 abpl.numseq AS numseq,
 abpl.tiptrp AS tiptrp,
 (select vlrtrp from tPROSprtrge prtr
-where prtr.parm =$cargo
+where prtr.parm =$codcargo
 and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
 						where prtr2.numprg = prtr.numprg 
 						and	  prtr2.datvig <= abpl.datpla)) as vlrtrp,
@@ -54,7 +54,7 @@ FROM tPROSabpl abpl
 	INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
 	INNER JOIN tPROSprtrge prtr ON prtr.parm = func.codcar 
 
-Where 	func.codcar = $cargo And abpl.datpla > '03-01-2018'"; 
+Where 	func.codcar = $codcargo And abpl.datpla > '03-01-2018'"; 
 
 if ($niv != 6) {
 

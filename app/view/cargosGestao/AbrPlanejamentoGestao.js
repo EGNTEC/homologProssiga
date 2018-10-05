@@ -175,7 +175,7 @@ Ext.define('desloc.view.cargosGestao.AbrPlanejamentoGestao', {
                                     },
                                     success: function() {
                                         
-                                     if(codcargo == 7800){
+                                     if(codcargo == 7800 || codcargo == 7300){
             
                                         var pGrid = Ext.getCmp('gridCadCoord');
                                         var aStore = pGrid.getStore();

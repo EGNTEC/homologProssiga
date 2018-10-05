@@ -2,7 +2,7 @@
 session_start();
 require("../session.php");
 include("../conn.php");
-include("../Funcoes/enviarEmail.php");
+include("enviarEmailAbertura.php");
 
 $tiptrp=$_POST['tiptrp'];
 $id=$_POST['id'];
@@ -76,7 +76,7 @@ $vlrprm = $arrayValTeto['vlrprm'];
   if($vlrpre > $vlrprm){ // se o valor da prestação for maior que o parâmetro.
      $result = 1;
                                   
-   }else{
+   }else{        
 
         $result = 2;  // altera normalmente
         
@@ -97,7 +97,7 @@ $vlrprm = $arrayValTeto['vlrprm'];
             $nomAprovador = 'Gerência Geral';            
         }
         
-        echo enviarEmail('emerson.gomes@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
+        echo enviarEmail('anacarla.silva@inec.org.br',$solicitante,$nomSolicitante,$aprovador,$nomAprovador,$acao);
        
        $prSldo = mssql_query("Exec dbo.pr_calcular_saldo $mat");
 

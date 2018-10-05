@@ -419,7 +419,7 @@ Ext.define('desloc.view.cargosGestao.solicitarValor',{
                 var comboAno = Ext.getCmp('anoCombo').getValue();
 
                 //Tratamento para o Coordenador Regional
-                if(codcargo == 7800){
+                if(codcargo == 7800 || codcargo == 7300){
 
                      var aStore = pGrid.getStore();
                      aStore.load({

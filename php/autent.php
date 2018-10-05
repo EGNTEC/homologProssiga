@@ -145,7 +145,7 @@ $_SESSION['descsit'] 		= $sit;
 }
 
 //Resgatar valor teto dos cargos de gestão
-if($dados['codcar'] == 7800){ //coordenador Regional
+if($dados['codcar'] == 7800 || $dados['codcar'] == 7300){ //coordenador Regional
 	$strValTet = "Select vlrprm From tPROSparm Where numprm = 7";
 	$queryValTet = mssql_query($strValTet);
 	$arrayValTet = mssql_fetch_array($queryValTet);

@@ -57,7 +57,7 @@ Ext.create('Ext.container.Viewport', {
                         buttons: Ext.Msg.OK,
                         icon: Ext.Msg.ERROR,
                         closable: false
-                     });
+                    });
                 }
             }else
             if (niv == 4) {
@@ -152,6 +152,13 @@ Ext.create('Ext.container.Viewport', {
                 Ext.getCmp('sitsubord').setHeight(470);
                 Ext.getCmp('gridsubord').setHeight(600);
                 Ext.getCmp('idSolValr').hide();
+
+                //Tratamento para os cargos G.O/C.R - Agro
+                if(codcargo == 7300){
+
+                    Ext.getCmp('idSolValr').show();
+                    Ext.getCmp('idGerSolVlr').hide();
+                }
 
                 //Tratamento para os cargos G.O/C.R
                 if(codcargo == 7800){
@@ -691,7 +698,7 @@ Ext.create('Ext.container.Viewport', {
                                     Ext.create('desloc.view.cargosGestao.solicitarValor');
 
                                     //Tratamento para o Coordenador Regional
-                                    if(codcargo == 7800){
+                                    if(codcargo == 7800 || codcargo == 7300){
 
                                         Ext.getCmp('gridCadGer').hide();
                                         Ext.getCmp('solvlr').maximize();

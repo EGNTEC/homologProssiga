@@ -4,7 +4,6 @@ ob_start();
 require("../session.php");
 include('../conn.php');
 
-
 //variaveis de sistema
 $dia = 01;
 
@@ -54,7 +53,7 @@ if($niv==4){
    #Fim do tratamento
 }
 
-if($codcargo == 7800 || $codcargo == 6500){
+if($codcargo == 7800 || $codcargo == 6500 || $codcargo == 7300){
 
     $mat     = $_SESSION['matricula'];
     $numreg  = $_SESSION['codreg'];

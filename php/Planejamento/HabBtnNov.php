@@ -17,7 +17,7 @@ if($niv == 4){
 }
 
 //Tratamento para os cargos Coordenador regional/Gerente de Opreções
-if($codcargo == 7800 || $codcargo == 6500){
+if($codcargo == 7800 || $codcargo == 6500 || $codcargo == 7300){
 
     $col = $_SESSION['matricula'];   
 }

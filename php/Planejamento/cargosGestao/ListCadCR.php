@@ -9,6 +9,7 @@ $col     = $_SESSION['matricula'];
 $codreg  = $_SESSION['codreg'];
 $codund  = $_SESSION['codund'];
 $programa= $_SESSION['programa'];
+$codcargo = $_SESSION['codcargo'];
 
 $mat    = $_GET['mat'];
 $und    = $_GET['unid'];
@@ -32,7 +33,7 @@ stts.dessts AS dessts,
 abpl.numseq AS numseq,
 abpl.tiptrp AS tiptrp,
 (select vlrtrp from tPROSprtrge prtr
-where prtr.parm =7800
+where prtr.parm =$codcargo
 and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
 						where prtr2.numprg = prtr.numprg 
 						and	  prtr2.datvig <= abpl.datpla)) as vlrtrp,
