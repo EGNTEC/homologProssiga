@@ -8,7 +8,7 @@ $niv     = $_SESSION['codniv'];
 $col     = $_SESSION['matricula'];
 $codreg  = $_SESSION['codreg'];
 $codund  = $_SESSION['codund'];
-$programa= $_SESSION['programa'];
+$programa= $_SESSION['usu_codprg'];
 $codcargo= $_SESSION['codcargo'];
 
 $mat    = $_GET['mat'];
@@ -19,13 +19,23 @@ $mes    = $_GET['mes'];
 $ano    = $_GET['ano'];
 
 //Tratamento para verificar o tipo de cargo
-if ($codcargo == 6500){
+/*if ($codcargo == 6500){
     $codcargo = 7800;
+}*/
+
+if($niv == 6 ){
+	$cargo = 6500;
+}else
+if($niv == 2 && $programa == 1){
+	$cargo = 7800;
+}else
+if($niv == 2 && $programa == 2){
+	$cargo = 7300;
 }
 
-if ($col == 858 || $col == 13917 || $col == 16963){
+/*if ($col == 858 || $col == 13917 || $col == 16963){
     $codcargo = 6500;
-}
+}*/
 
 $queryString = " SELECT Substring (Convert (Varchar(10), abpl.datpla, 103),4,7) AS mesref,
 
@@ -48,7 +58,7 @@ abpr.numseq AS numseq,
 abpr.seqpla AS seqpla,
 abpl.tiptrp AS tiptrp,
 (select vlrtrp from tPROSprtrge prtr
-where prtr.parm ='$codcargo'
+where prtr.parm ='$cargo'
 and	  prtr.datvig = (select max(datvig) from tPROSprtrge prtr2
                  where prtr2.numprg = prtr.numprg 
                  and	  prtr2.datvig <= abpl.datpla)) as vlrtrp
@@ -59,7 +69,7 @@ FROM tPROSabpr abpr
      INNER JOIN tPROSstts stts ON abpr.stspre = stts.numsts
      INNER JOIN tVTRHfunc func ON abpl.matfun = func.numcad
 
-Where func.codcar = $codcargo ";
+Where func.codcar = $cargo ";
 
 if ($col != 858 && $col != 13917 && $col != 16963) {
      $loc = " And func.numloc = $codreg";
