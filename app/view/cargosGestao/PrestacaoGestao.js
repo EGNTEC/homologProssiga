@@ -229,7 +229,7 @@ Ext.define('desloc.view.cargosGestao.PrestacaoGestao', {
                             Ext.Msg.alert('Mensagem', 'A data limite da prestação de contas foi ultrapassada.', function(btn, text) {});   
                           }else{
                              if(vStspr == 0){
-                               if(codcargo == 7800) {
+                               if(codcargo == 7800 || codcargo == 7300) {
                                  Ext.create('desloc.view.cargosGestao.CadPresGestCR'); 
                                }
 

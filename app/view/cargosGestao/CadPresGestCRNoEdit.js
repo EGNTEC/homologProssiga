@@ -585,7 +585,11 @@ Ext.define('desloc.view.cargosGestao.CadPresGestCRNoEdit', {
             if(mat == 858 || mat == 13917 || mat == 16963){
 
                 var sPanelGridN = Ext.getCmp('gridpreGestGO');  
-            }else{
+            }else
+            if(codcargo == 6500){
+                var sPanelGridN = Ext.getCmp('gridpreGestGO');
+            }
+            else{
                 var sPanelGridN = Ext.getCmp('gridpreGestCR');
             }
 

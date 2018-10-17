@@ -6,7 +6,8 @@ include("enviarEmailAbertura.php");
 
 $tiptrp=$_POST['tiptrp'];
 $id=$_POST['id'];
-$codcargo= $_SESSION['codcargo'];
+$vlrparmGO = $_POST['vlrparmGO'];
+$codcargo = $_SESSION['codcargo'];
 //$vlrpre=$_POST['vlrpre'];
 //$mat = $_SESSION['matricula'];
 $solicitante  = $_SESSION['matricula'];
@@ -53,6 +54,11 @@ $valTeto = mssql_query($queryString);
 $arrayValTeto = mssql_fetch_array($valTeto);
 $vlrprm = $arrayValTeto['vlrprm'];
 
+if($codcargo == 6500){
+    $vlrprm = $vlrparmGO;
+}else{
+    $vlrprm = $vlrprm;
+}
 
   //Tratamento para verificar se o valor total da prestação 
   // e parametro é vazio,nulo
@@ -81,6 +87,7 @@ $vlrprm = $arrayValTeto['vlrprm'];
         $result = 2;  // altera normalmente
         
         $queryUpdt = "UPDATE tPROSabpr SET stspre=1 WHERE numseq = '$id' ";
+        //var_dump($queryUpdt);
         $query = mssql_query($queryUpdt) or die('Erro ao alterar registro.');
 
         $strGer = "Select numcad,nomfun,emacom From tVTRHfunc Where codcar = 6500 And numloc = $numRegional";

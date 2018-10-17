@@ -284,7 +284,8 @@ Ext.define('desloc.view.cargosGestao.CadPresGestGO', {
                                             params: {
                                                 action: 'post',
                                                 tiptrp: tiptrp,
-                                                id: vIdAbrt                                                    
+                                                id: vIdAbrt,
+                                                vlrparmGO:vlrparm                                                    
                                             },
                                             success: function(response) {
                                                 var result = Ext.JSON.decode(response.responseText);

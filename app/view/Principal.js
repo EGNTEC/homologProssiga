@@ -893,7 +893,7 @@ Ext.create('Ext.container.Viewport', {
                                 handler: function() {
 
                                         //Tratamento para chamar a grid dos cargos de gestão
-                                        if(codcargo == 7800 || codcargo == 6500){
+                                        if(codcargo == 7800 || codcargo == 7300 || codcargo == 6500){
 
                                             Ext.create('desloc.view.cargosGestao.PrestacaoGestao');
                                             var regC = Ext.getCmp('regCombo');
